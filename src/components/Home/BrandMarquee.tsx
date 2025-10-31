@@ -18,7 +18,7 @@ const BrandMarquee = () => {
         {duplicatedBrands.map((brand, index) => (
           <div
             key={`brand-${index}`}
-            className="flex items-center justify-center flex-shrink-0"
+            className="flex items-center justify-center shrink-0"
           >
             <img
               src={brand}
