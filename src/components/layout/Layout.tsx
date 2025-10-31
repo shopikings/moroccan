@@ -6,8 +6,10 @@ import Footer from "./Footer";
 const Layout = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <TopBar />
-      <Navbar />
+      <div className="sticky top-0 z-30">
+        <TopBar />
+        <Navbar />
+      </div>
       <main className="flex-1">
         <Outlet />
       </main>
