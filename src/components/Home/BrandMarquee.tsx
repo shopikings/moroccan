@@ -13,7 +13,7 @@ const BrandMarquee = () => {
   const duplicatedBrands = [...brands, ...brands, ...brands];
 
   return (
-    <div className="w-full bg-white py-12 overflow-hidden">
+    <div className="w-full bg-background py-12 overflow-hidden">
       <div className="flex gap-16 animate-marquee">
         {duplicatedBrands.map((brand, index) => (
           <div
