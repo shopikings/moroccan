@@ -1,10 +1,14 @@
-import Navbar from "./components/layout/Navbar";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/layout/Layout";
+import Home from "./pages/Home";
 
 function App() {
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+      </Route>
+    </Routes>
   );
 }
 

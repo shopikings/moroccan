@@ -290,19 +290,20 @@ const Navbar = () => {
             </SelectContent>
           </Select>
 
-          <Separator orientation="vertical" className="h-6 bg-gray-400" />
+          <Separator orientation="vertical" className="h-6 bg-black" />
+
           <div className="flex items-center space-x-3">
-            <button className="p-1 cursor-pointer hover:bg-gray-100 rounded-full transition-colors">
+            <button className="p-1 hover:bg-gray-100 rounded-full transition-colors">
               <Search className="w-5 h-5 text-gray-700" />
             </button>
-            <button className="p-1 cursor-pointer hover:bg-gray-100 rounded-full transition-colors">
+            <button className="p-1 hover:bg-gray-100 rounded-full transition-colors">
               <img
                 src="/assets/icons/cart.svg"
                 alt="Cart"
                 className="w-5 h-5"
               />
             </button>
-            <button className="p-1 cursor-pointer hover:bg-gray-100 rounded-full transition-colors">
+            <button className="p-1 hover:bg-gray-100 rounded-full transition-colors">
               <img
                 src="/assets/icons/person.svg"
                 alt="User"
