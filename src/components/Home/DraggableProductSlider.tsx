@@ -75,11 +75,6 @@ const DraggableProductSlider = () => {
     setIsDragging(false);
   };
 
-  const getScrollPercentage = () => {
-    if (!sliderRef.current) return 0;
-    const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
-    return (scrollLeft / (scrollWidth - clientWidth)) * 100;
-  };
 
   return (
     <section className="py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-16">
