@@ -6,6 +6,7 @@ import TrendingNow from "@/components/Home/TrendingNow";
 import VideoImageSection from "@/components/Home/VideoImageSection";
 import CategorySection from "@/components/Home/CategorySection";
 import DraggableProductSlider from "@/components/Home/DraggableProductSlider";
+import FeaturesSection from "@/components/Home/FeaturesSection";
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
       <VideoImageSection />
       <CategorySection />
       <DraggableProductSlider />
+      <FeaturesSection />
     </div>
   );
 };
