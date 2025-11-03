@@ -101,7 +101,7 @@ const ProductSlider = () => {
               }}
             >
               {products.map((product) => (
-                <div key={product.id} className="min-w-[33.333%] px-2">
+                <div key={product.id} className="min-w-[25%] px-0">
                   <ProductCard {...product} />
                 </div>
               ))}

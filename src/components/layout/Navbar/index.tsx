@@ -257,8 +257,8 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="w-full bg-background border-b border-gray-200 px-4 py-4">
-      <div className="flex items-center justify-between max-w-7xl mx-auto">
+    <nav className="w-full bg-background border-b border-gray-200 px-8 py-4">
+      <div className="flex items-center justify-between max-w-8xl mx-auto">
         <div
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="flex items-center space-x-2 cursor-pointer "
@@ -288,7 +288,7 @@ const Navbar = () => {
           />
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 pr-5">
           <Select defaultValue="ma">
             <SelectTrigger className="w-auto border-0 bg-transparent shadow-none focus:ring-0 px-2">
               <SelectValue />
