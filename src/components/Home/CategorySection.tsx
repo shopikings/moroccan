@@ -1,23 +1,36 @@
+import { useState } from "react";
+
 const CategorySection = () => {
-  const categories = [
-    { name: "Caftans", svg: "/assets/home/caftans.svg" },
-    { name: "Jellabas", svg: "/assets/home/jellabas.svg" },
-    { name: "Luxe", svg: "/assets/home/luxe.svg" },
-    { name: "Brida", svg: "/assets/home/brida.svg" },
-  ];
+  const [activeCategory, setActiveCategory] = useState("Caftans");
+  const categories = ["Caftans", "Jellabas", "Luxe", "Bridal"];
 
   return (
     <section className="py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-16">
       <div className="max-w-[1920px] mx-auto">
-        <div className="flex flex-wrap items-start justify-start gap-6 md:gap-8 lg:gap-12">
+        <div className="flex flex-wrap items-center justify-start gap-6 md:gap-8 lg:gap-12">
           {categories.map((category) => (
-            <div key={category.name} className="shrink-0">
-              <img
-                src={category.svg}
-                alt={category.name}
-                className="h-10 md:h-16 lg:h-20 w-auto"
+            <button
+              key={category}
+              onClick={() => setActiveCategory(category)}
+              className="group flex items-center gap-3 transition-all"
+            >
+              <div
+                className={`w-12 h-12 rounded-full transition-all duration-300 ${
+                  activeCategory === category
+                    ? "bg-black scale-100"
+                    : "bg-transparent scale-0 group-hover:scale-100 group-hover:bg-black"
+                }`}
               />
-            </div>
+              <span
+                className={`font-fahkwang text-[48px] transition-colors ${
+                  activeCategory === category
+                    ? "text-black font-semibold"
+                    : "text-gray-400 group-hover:text-black"
+                }`}
+              >
+                {category}
+              </span>
+            </button>
           ))}
         </div>
       </div>
