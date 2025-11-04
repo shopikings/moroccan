@@ -7,6 +7,7 @@
   --font-family-montserrat: "Montserrat", sans-serif;
   --font-family-fahkwang: "Fahkwang", sans-serif;
   --font-family-trirong: "Trirong", serif;
+  --font-family-georgia: "Georgia", serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -133,6 +134,10 @@
 
 .font-trirong {
   font-family: "Trirong", serif;
+}
+
+.font-georgia {
+  font-family: "Georgia", serif;
 }
 
 @keyframes marquee {
