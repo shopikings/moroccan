@@ -57,9 +57,14 @@ const ProductCard = ({
           >
             <Button
               onClick={() => setIsModalOpen(true)}
-              className="bg-white text-black hover:bg-gray-100 font-montserrat font-semibold px-12 py-3 rounded-full"
+              className="bg-white text-black hover:bg-gray-100 font-montserrat font-semibold px-12 py-3 rounded-full relative overflow-hidden group/btn"
             >
-              Choose More Options
+              <span className="inline-block transition-all duration-500 group-hover/btn:translate-x-[200%] group-hover/btn:opacity-0">
+                Choose More Options
+              </span>
+              <span className="absolute inset-0 flex items-center justify-center -translate-x-[200%] opacity-0 transition-all duration-500 group-hover/btn:translate-x-0 group-hover/btn:opacity-100">
+                Choose More Options
+              </span>
             </Button>
           </div>
         </div>

@@ -16,8 +16,13 @@ const MediaGrid = () => {
             </h2>
           </div>
           <div className="absolute bottom-8 left-5">
-            <Button className="bg-white font-family-fahkwang text-[#080912] hover:bg-gray-100 font-semibold px-8 py-4 rounded-full">
-              Choose Options
+            <Button className="bg-white font-family-fahkwang text-[#080912] hover:bg-gray-100 font-semibold px-8 py-4 rounded-full relative overflow-hidden group/btn">
+              <span className="inline-block transition-all duration-500 group-hover/btn:translate-x-[200%] group-hover/btn:opacity-0">
+                Shop Now
+              </span>
+              <span className="absolute inset-0 flex items-center justify-center -translate-x-[200%] opacity-0 transition-all duration-500 group-hover/btn:translate-x-0 group-hover/btn:opacity-100">
+                Shop Now
+              </span>
             </Button>
           </div>
         </div>
@@ -38,8 +43,13 @@ const MediaGrid = () => {
             </h2>
           </div>
           <div className="absolute bottom-8 left-5">
-            <Button className="bg-white font-family-fahkwang text-[#080912] hover:bg-gray-100 font-normal px-8 py-4 rounded-full">
-              Shop Dresses
+            <Button className="bg-white font-family-fahkwang text-[#080912] hover:bg-gray-100 font-normal px-8 py-4 rounded-full relative overflow-hidden group/btn">
+              <span className="inline-block transition-all duration-500 group-hover/btn:translate-x-[200%] group-hover/btn:opacity-0">
+                Shop Dresses
+              </span>
+              <span className="absolute inset-0 flex items-center justify-center -translate-x-[200%] opacity-0 transition-all duration-500 group-hover/btn:translate-x-0 group-hover/btn:opacity-100">
+                Shop Dresses
+              </span>
             </Button>
           </div>
         </div>
@@ -56,8 +66,13 @@ const MediaGrid = () => {
             </h2>
           </div>
           <div className="absolute bottom-8 left-5">
-            <Button className="bg-white text-[#080912] font-family-fahkwang hover:bg-gray-100 font-normal px-8 py-4 rounded-full">
-              Shop New
+            <Button className="bg-white text-[#080912] font-family-fahkwang hover:bg-gray-100 font-normal px-8 py-4 rounded-full relative overflow-hidden group/btn">
+              <span className="inline-block transition-all duration-500 group-hover/btn:translate-x-[200%] group-hover/btn:opacity-0">
+                Shop Best Seller
+              </span>
+              <span className="absolute inset-0 flex items-center justify-center -translate-x-[200%] opacity-0 transition-all duration-500 group-hover/btn:translate-x-0 group-hover/btn:opacity-100">
+                Shop Best Seller
+              </span>
             </Button>
           </div>
         </div>
