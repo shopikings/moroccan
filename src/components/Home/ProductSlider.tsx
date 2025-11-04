@@ -13,6 +13,7 @@ interface Product {
 
 const ProductSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   const products: Product[] = [
     {
@@ -72,11 +73,17 @@ const ProductSlider = () => {
           </video>
         </div>
 
-        <div className="flex-1 relative w-full md:w-[66.666%]">
+        <div
+          className="flex-1 relative w-full md:w-[66.666%]"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           {currentIndex > 0 && (
             <button
               onClick={handlePrev}
-              className="absolute cursor-pointer left-4 top-1/2 -translate-y-1/2 z-10 p-2 border border-gray-300 rounded-full bg-white hover:bg-black transition-colors group"
+              className={`absolute cursor-pointer left-4 top-1/2 -translate-y-1/2 z-10 p-2 border border-gray-300 rounded-full bg-white hover:bg-black transition-all duration-300 group ${
+                isHovered ? "opacity-100 visible" : "opacity-0 invisible"
+              }`}
             >
               <ArrowLeft className="w-5 h-5 text-black group-hover:text-white transition-colors" />
             </button>
@@ -85,7 +92,9 @@ const ProductSlider = () => {
           {currentIndex < maxIndex && (
             <button
               onClick={handleNext}
-              className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 z-10 p-2 border border-gray-300 rounded-full bg-white hover:bg-black transition-colors group"
+              className={`absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 z-10 p-2 border border-gray-300 rounded-full bg-white hover:bg-black transition-all duration-300 group ${
+                isHovered ? "opacity-100 visible" : "opacity-0 invisible"
+              }`}
             >
               <ArrowRight className="w-5 h-5 text-black group-hover:text-white transition-colors" />
             </button>
