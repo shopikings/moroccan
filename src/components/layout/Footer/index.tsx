@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Facebook, Instagram, Youtube } from "lucide-react";
 import { Link } from "react-router-dom";
+import CountrySelector from "@/components/common/CountrySelector";
 
 const Footer = () => {
   const usefulLinks = [
@@ -141,14 +142,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
-            <button className="flex items-center gap-2 text-sm font-fahkwang text-gray-600">
-              <img
-                src="https://flagcdn.com/w20/gb.png"
-                alt="UK Flag"
-                className="w-5 h-4"
-              />
-              GBP £
-            </button>
+            <CountrySelector triggerClassName="w-auto border-0 bg-transparent shadow-none focus:ring-0 px-0 text-sm font-fahkwang text-gray-600" />
           </div>
 
           <div className="font-montserrat text-center text-black mb-4 md:mb-0">
