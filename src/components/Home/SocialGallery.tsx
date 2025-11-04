@@ -8,7 +8,7 @@ const SocialGallery = () => {
   ];
 
   return (
-    <section className="py-2 md:py-6 lg:py-10 px-4 md:px-8 lg:px-16 bg-[#F7F6F0]">
+    <section className="pb-2 pt-4 md:pb-6 lg:pb-10 px-4 md:px-8 lg:px-16 bg-[#F7F6F0]">
       <div className="max-w-[1920px] mx-auto">
         <h2 className="text-4xl md:text-4xl font-trirong text-center mb-8 md:mb-12">
           #moroccanglam.official
