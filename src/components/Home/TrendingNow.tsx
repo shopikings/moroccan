@@ -94,30 +94,30 @@ const TrendingNow = () => {
   };
 
   return (
-    <section className="py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-16">
+    <section className="pt-5 pb-26 px-4 md:px-8 lg:px-16">
       <div className="max-w-[1920px] mx-auto">
-        <h2 className="text-[48px] font-trirong font-normal mb-8 md:mb-12 text-center">
-          TRENDING NOW
+        <h2 className="text-[48px] capitalize font-trirong font-normal mb-3 md:mb-5 text-center">
+          Trending Now
         </h2>
 
         <div className="relative">
           {currentIndex > 0 && (
             <button
               onClick={handlePrevious}
-              className="absolute cursor-pointer left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-8 z-10 bg-black rounded-full p-2 md:p-3 shadow-lg hover:bg-gray-800 transition-colors"
+              className="absolute cursor-pointer left-4 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-8 z-10 bg-[#E3E2DD] rounded-full p-2 md:p-3 shadow-lg hover:bg-black transition-colors group"
               aria-label="Previous"
             >
-              <ArrowLeft className="w-5 h-5 md:w-6 md:h-6 text-white" />
+              <ArrowLeft className="w-5 h-5 md:w-6 md:h-6 text-black group-hover:text-white transition-colors" />
             </button>
           )}
 
           {currentIndex < maxIndex && (
             <button
               onClick={handleNext}
-              className="absolute cursor-pointer right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-8 z-10 bg-black rounded-full p-2 md:p-3 shadow-lg hover:bg-gray-800 transition-colors"
+              className="absolute cursor-pointer right-10 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-8 z-10 bg-[#E3E2DD] rounded-full p-2 md:p-3 shadow-lg hover:bg-black transition-colors group"
               aria-label="Next"
             >
-              <ArrowRight className="w-5 h-5 md:w-6 md:h-6 text-white" />
+              <ArrowRight className="w-5 h-5 md:w-6 md:h-6 text-black group-hover:text-white transition-colors" />
             </button>
           )}
 
@@ -145,12 +145,6 @@ const TrendingNow = () => {
                   >
                     <source src={card.videoUrl} type="video/mp4" />
                   </video>
-
-                  <div className="absolute top-10 left-1/2 -translate-x-1/2 bg-white px-3 py-1.5 w-fit rounded-sm pointer-events-none">
-                    <p className="text-black capitalize font-semibold text-sm md:text-sm font-family-montserrat ">
-                      hair oiling gets messy 😩
-                    </p>
-                  </div>
 
                   <div
                     className="absolute bottom-4 left-4 right-4 border border-black rounded-lg p-3 pointer-events-none"

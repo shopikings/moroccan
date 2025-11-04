@@ -75,9 +75,8 @@ const DraggableProductSlider = () => {
     setIsDragging(false);
   };
 
-
   return (
-    <section className="py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-16">
+    <section className="py-5 px-4 md:px-8 lg:px-16">
       <div className="max-w-[1920px] mx-auto">
         <div
           ref={sliderRef}

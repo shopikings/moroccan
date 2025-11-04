@@ -7,6 +7,7 @@ import VideoImageSection from "@/components/Home/VideoImageSection";
 import CategorySection from "@/components/Home/CategorySection";
 import DraggableProductSlider from "@/components/Home/DraggableProductSlider";
 import FeaturesSection from "@/components/Home/FeaturesSection";
+import SocialGallery from "@/components/Home/SocialGallery";
 
 const Home = () => {
   return (
@@ -20,6 +21,7 @@ const Home = () => {
       <CategorySection />
       <DraggableProductSlider />
       <FeaturesSection />
+      <SocialGallery />
     </div>
   );
 };

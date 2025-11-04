@@ -59,6 +59,13 @@ const Navbar = () => {
 
   const countries = [
     {
+      value: "gb",
+      code: "GBP",
+      name: "United Kingdom",
+      Flag: GB,
+      currencySymbol: "£",
+    },
+    {
       value: "ma",
       code: "MAR",
       name: "Morocco",
@@ -72,13 +79,7 @@ const Navbar = () => {
       Flag: US,
       currencySymbol: "$",
     },
-    {
-      value: "gb",
-      code: "UK",
-      name: "United Kingdom",
-      Flag: GB,
-      currencySymbol: "£",
-    },
+
     { value: "fr", code: "FR", name: "France", Flag: FR, currencySymbol: "€" },
     { value: "de", code: "DE", name: "Germany", Flag: DE, currencySymbol: "€" },
     {
@@ -289,7 +290,7 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center space-x-4 pr-5">
-          <Select defaultValue="ma">
+          <Select defaultValue="gb">
             <SelectTrigger className="w-auto border-0 bg-transparent shadow-none focus:ring-0 px-2">
               <SelectValue />
             </SelectTrigger>
@@ -313,6 +314,13 @@ const Navbar = () => {
             <button className="p-1 cursor-pointer hover:bg-gray-100 rounded-full transition-colors">
               <Search className="w-5 h-5 text-gray-700" />
             </button>
+            <button className="p-1 cursor-pointer hover:bg-gray-100 rounded-full transition-colors">
+              <img
+                src="/assets/icons/person.svg"
+                alt="User"
+                className="w-5 h-5"
+              />
+            </button>
             <button
               onClick={() => setIsCartOpen(true)}
               className="p-1 cursor-pointer hover:bg-gray-100 rounded-full transition-colors"
@@ -320,13 +328,6 @@ const Navbar = () => {
               <img
                 src="/assets/icons/cart.svg"
                 alt="Cart"
-                className="w-5 h-5"
-              />
-            </button>
-            <button className="p-1 cursor-pointer hover:bg-gray-100 rounded-full transition-colors">
-              <img
-                src="/assets/icons/person.svg"
-                alt="User"
                 className="w-5 h-5"
               />
             </button>

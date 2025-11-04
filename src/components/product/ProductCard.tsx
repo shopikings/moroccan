@@ -24,7 +24,7 @@ const ProductCard = ({
   return (
     <>
       <div
-        className="relative group cursor-pointer"
+        className="relative group cursor-pointer h-full"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -40,12 +40,12 @@ const ProductCard = ({
           <img
             src={image}
             alt={name}
-            className="w-full h-[500px] object-cover"
+            className="w-full h-[600px] object-cover"
           />
           <img
             src={hoverImage}
             alt={name}
-            className={`absolute inset-0 w-full h-[500px] object-cover transition-opacity duration-500 ${
+            className={`absolute inset-0 w-full h-[600px] object-cover transition-opacity duration-500 ${
               isHovered ? "opacity-100" : "opacity-0"
             }`}
           />

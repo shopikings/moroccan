@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 
 const VideoImageSection = () => {
   return (
-    <section className="w-full">
+    <section className="w-full ">
       <div className="flex flex-col md:flex-row">
         <div className="w-full md:w-1/2 relative">
           <img

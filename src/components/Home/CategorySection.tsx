@@ -5,7 +5,7 @@ const CategorySection = () => {
   const categories = ["Caftans", "Jellabas", "Luxe", "Bridal"];
 
   return (
-    <section className="py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-16">
+    <section className="py-5 px-4 md:px-8 lg:px-16">
       <div className="max-w-[1920px] mx-auto">
         <div className="flex flex-wrap items-center justify-start gap-6 md:gap-8 lg:gap-12">
           {categories.map((category) => (

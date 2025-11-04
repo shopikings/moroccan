@@ -58,21 +58,21 @@ const ProductSlider = () => {
   };
 
   return (
-    <div className="w-full bg-background p-10 ">
-      <div className="flex">
-        <div className="relative w-[400px]">
+    <div className="w-full bg-background p-0">
+      <div className="flex flex-col md:flex-row">
+        <div className="relative w-full md:w-[25.333%]">
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="w-full h-[500px] object-cover"
+            className="w-full h-[600px] object-cover"
           >
             <source src="/assets/home/home-slider.mp4" type="video/mp4" />
           </video>
         </div>
 
-        <div className="flex-1 relative">
+        <div className="flex-1 relative w-full md:w-[66.666%]">
           {currentIndex > 0 && (
             <button
               onClick={handlePrev}
@@ -101,7 +101,7 @@ const ProductSlider = () => {
               }}
             >
               {products.map((product) => (
-                <div key={product.id} className="min-w-[25%] px-0">
+                <div key={product.id} className="min-w-[33.333%] px-0">
                   <ProductCard {...product} />
                 </div>
               ))}

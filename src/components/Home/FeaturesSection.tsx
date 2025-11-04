@@ -42,11 +42,22 @@ const FeaturesSection = () => {
   };
 
   return (
-    <section className="py-12 md:py-16 bg-[#F7F6F0]">
-      <div className="max-w-[1920px] mx-auto px-4 md:px-8 lg:px-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <section className="py-8 bg-[#F7F6F0]">
+      <div className="w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature, index) => (
-            <div key={index} className="flex flex-col items-center text-center">
+            <div
+              key={index}
+              className={`flex flex-col items-center text-center py-8 px-4 ${
+                index === 0
+                  ? "border-t border-b border-[#DEDDD8]"
+                  : index === 1
+                  ? "border-t border-b border-l border-[#DEDDD8]"
+                  : index === 2
+                  ? "border border-[#DEDDD8]"
+                  : "border-t border-b border-[#DEDDD8]"
+              }`}
+            >
               <img
                 src={feature.icon}
                 alt={feature.title}
