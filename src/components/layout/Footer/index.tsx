@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Facebook, Instagram, Youtube } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const usefulLinks = [
@@ -12,11 +13,11 @@ const Footer = () => {
   ];
 
   const brandLinks = [
-    "About Us",
-    "Rewards",
-    "Affiliate Program",
-    "Moroccan Skincare",
-    "Blogs",
+    { label: "About Us", href: "/about" },
+    { label: "Rewards", href: "#" },
+    { label: "Affiliate Program", href: "#" },
+    { label: "Moroccan Skincare", href: "#" },
+    { label: "Blogs", href: "#" },
   ];
 
   const policyLinks = [
@@ -71,10 +72,22 @@ const Footer = () => {
             <h3 className="mb-4">Brand</h3>
             <ul className="space-y-2">
               {brandLinks.map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-gray-950 hover:underline">
-                    {link}
-                  </a>
+                <li key={link.label}>
+                  {link.href.startsWith("/") ? (
+                    <Link
+                      to={link.href}
+                      className="text-gray-950 hover:underline"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className="text-gray-950 hover:underline"
+                    >
+                      {link.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
