@@ -88,8 +88,17 @@ const TrendingNow = () => {
         return newSet;
       });
     } else {
+      // Pause all other videos
+      playingVideos.forEach((playingId) => {
+        const playingVideo = videoRefs.current[playingId];
+        if (playingVideo && playingId !== id) {
+          playingVideo.pause();
+        }
+      });
+
+      // Play the selected video
       video.play();
-      setPlayingVideos((prev) => new Set(prev).add(id));
+      setPlayingVideos(new Set([id]));
     }
   };
 
