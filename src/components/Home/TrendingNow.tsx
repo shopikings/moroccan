@@ -94,7 +94,7 @@ const TrendingNow = () => {
   };
 
   return (
-    <section className="pt-5 pb-26 px-4 md:px-8 lg:px-16">
+    <section className="pt-5 pb-8 px-4 md:px-8 lg:px-16">
       <div className="max-w-[1920px] mx-auto">
         <h2 className="text-[48px] capitalize font-trirong font-normal mb-3 md:mb-5 text-center">
           Trending Now

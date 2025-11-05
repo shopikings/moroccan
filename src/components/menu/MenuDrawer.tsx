@@ -12,7 +12,7 @@ const MenuDrawer = ({ isOpen }: MenuDrawerProps) => {
     "Caftans",
     "Luxe",
     "Bridal",
-    "Gents - Thobe Collection",
+    "Gents - Thobe",
     "Accessories",
     "Look Book",
     "Moroccan Skincare",

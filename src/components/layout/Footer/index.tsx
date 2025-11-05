@@ -149,7 +149,17 @@ const Footer = () => {
             <p className=" text-xs">
               © 2025 All Rights Reserved Moroccan Glam®
             </p>
-            <p className="text-xs">Powered By Shopikings.com</p>
+            <p className="text-xs">
+              Powered By{" "}
+              <a
+                href="https://shopikings.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-gray-700 transition-colors"
+              >
+                Shopikings.com
+              </a>
+            </p>
           </div>
 
           <div className="flex items-center gap-4">
