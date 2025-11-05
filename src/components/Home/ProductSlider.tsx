@@ -11,7 +11,11 @@ interface Product {
   badge?: string;
 }
 
-const ProductSlider = () => {
+interface ProductSliderProps {
+  title?: string;
+}
+
+const ProductSlider = ({ title }: ProductSliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -60,6 +64,11 @@ const ProductSlider = () => {
 
   return (
     <div className="w-full bg-background p-0">
+      {title && (
+        <h1 className="text-4xl pb-5 font-medium font-family-trirong">
+          {title}
+        </h1>
+      )}
       <div className="flex flex-col md:flex-row">
         <div className="relative w-full md:w-[25.333%]">
           <video

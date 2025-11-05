@@ -152,7 +152,7 @@ const Footer = () => {
             <p className="text-xs">
               Powered By{" "}
               <a
-                href="https://shopikings.com"
+                href="#"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline hover:text-gray-700 transition-colors"
