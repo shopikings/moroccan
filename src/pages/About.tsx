@@ -44,13 +44,13 @@ const About = () => {
                 culture, our brand celebrates the timeless beauty, heritage, and
                 craftsmanship of{" "}
                 <span
-                  className="underline decoration-[#F4B32E] decoration-2 relative cursor-pointer"
+                  className="inline-block underline decoration-[#F4B32E] decoration-2 relative cursor-pointer"
                   onMouseEnter={() => setHoveredTooltip("moroccan-design")}
                   onMouseLeave={() => setHoveredTooltip(null)}
                 >
-                  Moroccan design
+                  Moroccan&nbsp;design
                   {hoveredTooltip === "moroccan-design" && (
-                    <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[400px] max-w-[90vw] bg-[#F7F6F0] border-2 border-black rounded-lg p-4 shadow-lg z-50 text-left">
+                    <span className="absolute left-0 top-full mt-2 w-[400px] max-w-[90vw] bg-[#F7F6F0] border-2 border-black rounded-lg p-4 shadow-lg z-50 text-left">
                       <span className="block text-center text-xl font-bold mb-2 text-black">
                         {tooltipContent["moroccan-design"].title}
                       </span>
@@ -66,13 +66,13 @@ const About = () => {
               <p className="text-2xl md:text-3xl lg:text-4xl font-trirong leading-relaxed">
                 Each piece in our collection is thoughtfully crafted using{" "}
                 <span
-                  className="underline decoration-[#F4B32E] decoration-2 relative cursor-pointer"
+                  className="inline-block underline decoration-[#F4B32E] decoration-2 relative cursor-pointer"
                   onMouseEnter={() => setHoveredTooltip("premium-fabrics")}
                   onMouseLeave={() => setHoveredTooltip(null)}
                 >
-                  premium fabrics
+                  premium&nbsp;fabrics
                   {hoveredTooltip === "premium-fabrics" && (
-                    <span className="absolute left-1/2 -translate-x-1/2 top-full bg-[#F7F6F0] mt-2 w-[400px] max-w-[90vw] border-2 border-black rounded-lg p-4 shadow-lg z-50 text-left">
+                    <span className="absolute left-0 top-full mt-2 w-[400px] max-w-[90vw] bg-[#F7F6F0] border-2 border-black rounded-lg p-4 shadow-lg z-50 text-left">
                       <span className="block text-center text-xl font-bold mb-2 text-black">
                         {tooltipContent["premium-fabrics"].title}
                       </span>
@@ -94,17 +94,17 @@ const About = () => {
               <p className="text-2xl md:text-3xl lg:text-4xl font-trirong leading-relaxed">
                 With{" "}
                 <span
-                  className="underline decoration-[#F4B32E] decoration-2 relative cursor-pointer"
+                  className="inline-block underline decoration-[#F4B32E] decoration-2 relative cursor-pointer"
                   onMouseEnter={() => setHoveredTooltip("worldwide-shipping")}
                   onMouseLeave={() => setHoveredTooltip(null)}
                 >
-                  worldwide shipping
+                  worldwide&nbsp;shipping
                   {hoveredTooltip === "worldwide-shipping" && (
-                    <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[400px] max-w-[90vw] bg-[#F7F6F0] border-2 border-black rounded-lg p-4 shadow-lg z-50 text-left">
+                    <span className="absolute left-0 top-full mt-2 w-[400px] max-w-[90vw] bg-[#F7F6F0] border-2 border-black rounded-lg p-4 shadow-lg z-50 text-left">
                       <span className="block text-center text-xl font-bold mb-2 text-black">
                         {tooltipContent["worldwide-shipping"].title}
                       </span>
-                      <span className="block text-sm font-normal text-gray-700 leading-relaxed">
+                      <span className="block text-center text-sm font-normal text-gray-700 leading-relaxed">
                         {tooltipContent["worldwide-shipping"].description}
                       </span>
                     </span>
