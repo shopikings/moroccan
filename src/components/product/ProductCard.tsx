@@ -9,6 +9,7 @@ interface ProductCardProps {
   image: string;
   hoverImage: string;
   badge?: string;
+  salePercentage?: number;
 }
 
 const ProductCard = ({
@@ -17,9 +18,13 @@ const ProductCard = ({
   image,
   hoverImage,
   badge,
+  salePercentage,
 }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const isSoldOut = badge === "SOLD OUT";
+  const showSaleBadge = salePercentage && salePercentage > 0;
 
   return (
     <>
@@ -28,7 +33,23 @@ const ProductCard = ({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {badge && (
+        {isSoldOut && (
+          <div className="absolute top-4 left-4 bg-[#321E1E] text-white px-2 py-3 text-xs font-montserrat font-semibold z-10 writing-mode-vertical">
+            <span className="[writing-mode:vertical-lr] rotate-180">
+              SOLD OUT
+            </span>
+          </div>
+        )}
+
+        {showSaleBadge && !isSoldOut && (
+          <div className="absolute top-4 left-4 bg-[#CD3434] text-white px-2 py-3 text-xs font-montserrat font-semibold z-10 writing-mode-vertical">
+            <span className="[writing-mode:vertical-lr] rotate-180">
+              SAVE {salePercentage}%
+            </span>
+          </div>
+        )}
+
+        {badge && !isSoldOut && !showSaleBadge && (
           <div className="absolute top-4 left-4 bg-[#321E1E] text-white px-2 py-3 text-xs font-montserrat font-semibold z-10 writing-mode-vertical">
             <span className="[writing-mode:vertical-lr] rotate-180">
               {badge}
