@@ -107,7 +107,7 @@ const Shop = () => {
             <FilterBar />
           </div>
 
-          <div className="px-4 md:px-8 lg:px-16">
+          <div className="">
             <div className="py-12">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {currentProducts.map((product) => (
