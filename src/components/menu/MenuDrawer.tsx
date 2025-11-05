@@ -79,7 +79,7 @@ const MenuDrawer = ({ isOpen }: MenuDrawerProps) => {
               {menuItems.map((item, index) => (
                 <li key={index}>
                   <a
-                    href="#"
+                    href="/shop"
                     className="font-fahkwang text-2xl md:text-3xl font-medium text-gray-900 hover:text-gray-600 transition-colors block"
                   >
                     {item}

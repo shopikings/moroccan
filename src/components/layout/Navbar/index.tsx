@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { useNavigate } from "react-router-dom";
 import CartDrawer from "@/components/cart/CartDrawer";
 import MenuDrawer from "@/components/menu/MenuDrawer";
 import CountrySelector from "@/components/common/CountrySelector";
@@ -8,6 +9,7 @@ import CountrySelector from "@/components/common/CountrySelector";
 const Navbar = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <nav className="w-full bg-background border-b border-gray-200 px-8 py-4">
@@ -33,7 +35,10 @@ const Navbar = () => {
           </span>
         </div>
 
-        <div className="absolute left-1/2 transform -translate-x-1/2">
+        <div
+          className="absolute left-1/2 transform -translate-x-1/2 cursor-pointer"
+          onClick={() => navigate("/")}
+        >
           <img
             src="/assets/logo.svg"
             alt="Moroccan Logo"

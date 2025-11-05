@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const HeroBanner = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="relative w-full h-[calc(100vh-110px)] overflow-hidden">
       <video
@@ -23,6 +26,7 @@ const HeroBanner = () => {
           Join us for our soft launch and grand opening event
         </p>
         <Button
+          onClick={() => navigate("/shop")}
           size="lg"
           className="bg-[#FAF4F0] hover:bg-[#FAF4F0] text-black font-fahkwang font-semibold text-base px-8 py-6 rounded-full"
         >
