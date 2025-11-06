@@ -18,19 +18,21 @@ const Product = () => {
   return (
     <div className="w-full bg-[#F7F6F0] min-h-screen">
       <div className=" px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-[57%_43%] gap-4">
           <ProductImageGrid
             images={productImages}
             onImageClick={setSelectedImage}
           />
-          <ProductInfo
-            id={id}
-            name="Printed Modal Hijab - Cloudy Stone"
-            salePrice="£11.00 GBP"
-            originalPrice="£15.00 GBP"
-            discount={27}
-            inStock={true}
-          />
+          <div className="lg:sticky lg:top-24 lg:self-start">
+            <ProductInfo
+              id={id}
+              name="Printed Modal Hijab - Cloudy Stone"
+              salePrice="£11.00 GBP"
+              originalPrice="£15.00 GBP"
+              discount={27}
+              inStock={true}
+            />
+          </div>
         </div>
       </div>
 

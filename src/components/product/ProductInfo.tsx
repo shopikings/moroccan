@@ -3,6 +3,8 @@ import ProductPrice from "./ProductPrice";
 import ColorSelector from "./ColorSelector";
 import SizeSelector from "./SizeSelector";
 import ProductActions from "./ProductActions";
+import ProductAccordions from "./ProductAccordions";
+import CompleteYourLook from "./CompleteYourLook";
 import { Button } from "../ui/button";
 
 interface ProductInfoProps {
@@ -84,6 +86,10 @@ const ProductInfo = ({
       />
 
       <ProductActions inStock={inStock} />
+
+      <ProductAccordions />
+
+      <CompleteYourLook />
     </div>
   );
 };
