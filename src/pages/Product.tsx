@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import ProductImageGrid from "@/components/product/ProductImageGrid";
 import ProductInfo from "@/components/product/ProductInfo";
 import ImageZoomModal from "@/components/product/ImageZoomModal";
 import CustomerReviews from "@/components/product/CustomerReviews";
 
 const Product = () => {
-  const { id } = useParams();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const productImages = [
@@ -26,12 +24,10 @@ const Product = () => {
           />
           <div className="lg:sticky lg:top-26 lg:self-start">
             <ProductInfo
-              id={id}
               name="Printed Modal Hijab - Cloudy Stone"
               salePrice="£11.00 GBP"
               originalPrice="£15.00 GBP"
               discount={27}
-              inStock={true}
             />
           </div>
         </div>

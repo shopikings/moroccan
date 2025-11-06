@@ -1,10 +1,6 @@
 import { Button } from "../ui/button";
 
-interface ProductActionsProps {
-  inStock: boolean;
-}
-
-const ProductActions = ({ inStock }: ProductActionsProps) => {
+const ProductActions = () => {
   return (
     <div className="space-y-3">
       <Button className="w-full bg-black text-white py-6 rounded-full font-montserrat text-sm hover:bg-gray-800 transition-colors">
