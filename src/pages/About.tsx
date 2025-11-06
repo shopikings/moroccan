@@ -120,7 +120,7 @@ const About = () => {
               </p>
 
               <p className="text-base md:text-lg font-trirong mt-12 text-black">
-                -Amal Chentouf, Moroccan Glam Founder and Owner
+                -Amal, Moroccan Glam Founder and Owner
               </p>
             </div>
           </div>

@@ -1,21 +1,26 @@
 import { Separator } from "@/components/ui/separator";
+import { Link } from "react-router-dom";
 
 interface MenuDrawerProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const MenuDrawer = ({ isOpen }: MenuDrawerProps) => {
+const MenuDrawer = ({ isOpen, onClose }: MenuDrawerProps) => {
   const menuItems = [
-    "New Arrivals",
-    "Clearance Sale",
-    "Caftans",
-    "Luxe",
-    "Bridal",
-    "Gents - Thobe",
-    "Accessories",
-    "Look Book",
-    "Moroccan Skincare",
+    { label: "New Arrivals", link: "/shop" },
+    { label: "Clearance Sale", link: "/shop" },
+    { label: "Caftans", link: "/shop" },
+    { label: "Luxe", link: "/shop" },
+    { label: "Bridal", link: "/shop" },
+    { label: "Gents - Thobe", link: "/shop" },
+    { label: "Accessories", link: "/shop" },
+    { label: "Look Book", link: "/shop" },
+    {
+      label: "Moroccan Skincare",
+      link: "https://moroccanglow.co.uk/",
+      external: true,
+    },
   ];
 
   const socialIcons = [
@@ -78,12 +83,24 @@ const MenuDrawer = ({ isOpen }: MenuDrawerProps) => {
             <ul className="space-y-6">
               {menuItems.map((item, index) => (
                 <li key={index}>
-                  <a
-                    href="/shop"
-                    className="font-fahkwang text-2xl md:text-3xl font-medium text-gray-900 hover:text-gray-600 transition-colors block"
-                  >
-                    {item}
-                  </a>
+                  {item.external ? (
+                    <a
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-fahkwang text-2xl md:text-3xl font-medium text-gray-900 hover:text-gray-600 transition-colors block"
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link
+                      to={item.link}
+                      onClick={onClose}
+                      className="font-fahkwang text-2xl md:text-3xl font-medium text-gray-900 hover:text-gray-600 transition-colors block"
+                    >
+                      {item.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
