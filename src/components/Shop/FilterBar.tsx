@@ -1,9 +1,11 @@
-import { useState } from "react";
 import { ListFilter } from "lucide-react";
 
-const FilterBar = () => {
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+interface FilterBarProps {
+  viewMode: "grid" | "list";
+  onViewModeChange: (mode: "grid" | "list") => void;
+}
 
+const FilterBar = ({ viewMode, onViewModeChange }: FilterBarProps) => {
   return (
     <div className="flex items-center justify-between py-4">
       <div className="text-sm font-montserrat text-gray-700">73 products</div>
@@ -11,7 +13,7 @@ const FilterBar = () => {
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setViewMode("grid")}
+            onClick={() => onViewModeChange("grid")}
             className={`p-2 transition-colors ${
               viewMode === "grid"
                 ? "text-black"
@@ -27,7 +29,7 @@ const FilterBar = () => {
             </svg>
           </button>
           <button
-            onClick={() => setViewMode("list")}
+            onClick={() => onViewModeChange("list")}
             className={`p-2 transition-colors ${
               viewMode === "list"
                 ? "text-black"

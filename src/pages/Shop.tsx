@@ -6,6 +6,7 @@ import Pagination from "@/components/Shop/Pagination";
 
 const Shop = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const productsPerPage = 44;
   const baseProducts = [
     {
@@ -104,16 +105,38 @@ const Shop = () => {
           <Separator className="bg-gray-300" />
 
           <div className="px-4 md:px-5">
-            <FilterBar />
+            <FilterBar viewMode={viewMode} onViewModeChange={setViewMode} />
           </div>
 
           <div className="">
             <div className="py-12">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
-                {currentProducts.map((product) => (
-                  <ProductCard key={product.id} {...product} />
-                ))}
-              </div>
+              {viewMode === "grid" ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+                  {currentProducts.map((product) => (
+                    <ProductCard key={product.id} {...product} />
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-1">
+                  {currentProducts.map((product) => (
+                    <div
+                      key={product.id}
+                      className="relative group cursor-pointer overflow-hidden"
+                    >
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-auto object-cover"
+                      />
+                      <img
+                        src={product.hoverImage}
+                        alt={product.name}
+                        className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <Pagination
