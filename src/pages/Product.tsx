@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import ProductImageGrid from "@/components/product/ProductImageGrid";
 import ProductInfo from "@/components/product/ProductInfo";
 import ImageZoomModal from "@/components/product/ImageZoomModal";
+import CustomerReviews from "@/components/product/CustomerReviews";
 
 const Product = () => {
   const { id } = useParams();
@@ -17,13 +18,13 @@ const Product = () => {
 
   return (
     <div className="w-full bg-[#F7F6F0] min-h-screen">
-      <div className=" px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-[57%_43%] gap-4">
+      <div className="px-4 md:px-6 lg:px-8 py-8 md:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[57%_43%] gap-6 lg:gap-4">
           <ProductImageGrid
             images={productImages}
             onImageClick={setSelectedImage}
           />
-          <div className="lg:sticky lg:top-24 lg:self-start">
+          <div className="lg:sticky lg:top-26 lg:self-start">
             <ProductInfo
               id={id}
               name="Printed Modal Hijab - Cloudy Stone"
@@ -34,6 +35,8 @@ const Product = () => {
             />
           </div>
         </div>
+
+        <CustomerReviews />
       </div>
 
       <ImageZoomModal
