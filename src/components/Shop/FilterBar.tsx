@@ -3,9 +3,14 @@ import { ListFilter } from "lucide-react";
 interface FilterBarProps {
   viewMode: "grid" | "list";
   onViewModeChange: (mode: "grid" | "list") => void;
+  onFilterClick: () => void;
 }
 
-const FilterBar = ({ viewMode, onViewModeChange }: FilterBarProps) => {
+const FilterBar = ({
+  viewMode,
+  onViewModeChange,
+  onFilterClick,
+}: FilterBarProps) => {
   return (
     <div className="flex items-center justify-between py-4">
       <div className="text-sm font-montserrat text-gray-700">73 products</div>
@@ -14,7 +19,7 @@ const FilterBar = ({ viewMode, onViewModeChange }: FilterBarProps) => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => onViewModeChange("grid")}
-            className={`p-2 transition-colors ${
+            className={`p-2 cursor-pointer transition-colors ${
               viewMode === "grid"
                 ? "text-black"
                 : "text-gray-400 hover:text-gray-600"
@@ -30,7 +35,7 @@ const FilterBar = ({ viewMode, onViewModeChange }: FilterBarProps) => {
           </button>
           <button
             onClick={() => onViewModeChange("list")}
-            className={`p-2 transition-colors ${
+            className={`p-2 cursor-pointer transition-colors ${
               viewMode === "list"
                 ? "text-black"
                 : "text-gray-400 hover:text-gray-600"
@@ -63,7 +68,10 @@ const FilterBar = ({ viewMode, onViewModeChange }: FilterBarProps) => {
 
         <div className="h-6 w-px bg-gray-300"></div>
 
-        <button className="flex items-center gap-2 text-sm font-montserrat text-gray-700 hover:text-black transition-colors">
+        <button
+          onClick={onFilterClick}
+          className="flex items-center gap-2 text-sm font-montserrat text-gray-700 hover:text-black transition-colors"
+        >
           <ListFilter className="w-4 h-4" />
           <span className="text-black text-xs font-family-montserrat">
             Filter & Sort

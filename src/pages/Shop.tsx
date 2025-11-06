@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FilterBar from "@/components/Shop/FilterBar";
+import FilterDrawer from "@/components/Shop/FilterDrawer";
 import { Separator } from "@/components/ui/separator";
 import ProductCard from "@/components/product/ProductCard";
 import Pagination from "@/components/Shop/Pagination";
@@ -7,6 +8,7 @@ import Pagination from "@/components/Shop/Pagination";
 const Shop = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const productsPerPage = 44;
   const baseProducts = [
     {
@@ -105,8 +107,17 @@ const Shop = () => {
           <Separator className="bg-gray-300" />
 
           <div className="px-4 md:px-5">
-            <FilterBar viewMode={viewMode} onViewModeChange={setViewMode} />
+            <FilterBar
+              viewMode={viewMode}
+              onViewModeChange={setViewMode}
+              onFilterClick={() => setIsFilterOpen(true)}
+            />
           </div>
+
+          <FilterDrawer
+            isOpen={isFilterOpen}
+            onClose={() => setIsFilterOpen(false)}
+          />
 
           <div className="">
             <div className="py-12">
