@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import ProductOptionsModal from "./ProductOptionsModal";
 
@@ -13,6 +14,7 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({
+  id,
   name,
   price,
   image,
@@ -20,11 +22,16 @@ const ProductCard = ({
   badge,
   salePercentage,
 }: ProductCardProps) => {
+  const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const isSoldOut = badge === "SOLD OUT";
   const showSaleBadge = salePercentage && salePercentage > 0;
+
+  const handleCardClick = () => {
+    navigate(`/product/${id}`);
+  };
 
   return (
     <>
@@ -32,6 +39,7 @@ const ProductCard = ({
         className="relative group cursor-pointer h-full"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onClick={handleCardClick}
       >
         {isSoldOut && (
           <div className="absolute top-4 left-4 bg-[#321E1E] text-white px-2 py-3 text-xs font-montserrat font-semibold z-10 writing-mode-vertical">
@@ -77,7 +85,10 @@ const ProductCard = ({
             }`}
           >
             <Button
-              onClick={() => setIsModalOpen(true)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsModalOpen(true);
+              }}
               className="bg-white text-black hover:bg-gray-100 font-montserrat font-semibold px-12 py-3 rounded-full relative overflow-hidden group/btn"
             >
               <span className="inline-block transition-all duration-500 group-hover/btn:translate-x-[200%] group-hover/btn:opacity-0">

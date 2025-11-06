@@ -8,6 +8,7 @@
   --font-family-fahkwang: "Fahkwang", sans-serif;
   --font-family-trirong: "Trirong", serif;
   --font-family-georgia: "Georgia", serif;
+  --font-family-cormorant: "Cormorant", serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -138,6 +139,10 @@
 
 .font-georgia {
   font-family: "Georgia", serif;
+}
+
+.font-cormorant {
+  font-family: "Cormorant", serif;
 }
 
 @keyframes marquee {
