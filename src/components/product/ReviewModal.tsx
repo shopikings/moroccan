@@ -21,14 +21,14 @@ const ReviewModal = ({ isOpen, onClose, review }: ReviewModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-5xl p-0 bg-transparent border-0 shadow-none [&>button]:hidden">
+      <DialogContent className="max-w-5xl p-0 bg-transparent border-0 shadow-none">
         <div
           onClick={onClose}
           className="absolute cursor-pointer -top-12 right-0 bg-[#C6C6C6CC]/90 rounded-full p-2 hover:bg-gray-100 transition-colors z-50"
         >
           <X className="w-6 h-6 text-black" />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 bg-white overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2 bg-background overflow-hidden">
           <div className="relative">
             <img
               src={review.image}
@@ -36,7 +36,7 @@ const ReviewModal = ({ isOpen, onClose, review }: ReviewModalProps) => {
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="p-4 bg-[#F7F6F0]">
+          <div className="p-4 bg-background">
             <div className="mx-4 py-3 flex items-center justify-between border-b border-black  mb-3">
               <h2 className="text-3xl font-montserrat font-bold">
                 {review.name}

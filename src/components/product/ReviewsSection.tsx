@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import ReviewDetailModal from "./ReviewDetailModal";
+import AddReviewModal from "./AddReviewModal";
 import { Button } from "../ui/button";
 
 const ReviewsSection = () => {
@@ -9,6 +10,7 @@ const ReviewsSection = () => {
   const [selectedReviewIndex, setSelectedReviewIndex] = useState<number | null>(
     null
   );
+  const [isAddReviewOpen, setIsAddReviewOpen] = useState(false);
 
   const reviews = [
     {
@@ -143,7 +145,10 @@ const ReviewsSection = () => {
         <h3 className="text-lg font-montserrat font-semibold mb-4 text-center">
           Reviews (8,582)
         </h3>
-        <Button className="bg-black text-white px-6 py-6 rounded-none font-montserrat text-sm hover:bg-gray-800 transition-colors">
+        <Button
+          onClick={() => setIsAddReviewOpen(true)}
+          className="bg-black text-white px-6 py-6 rounded-none font-montserrat text-sm hover:bg-gray-800 transition-colors"
+        >
           Add a Review
         </Button>
       </div>
@@ -153,6 +158,12 @@ const ReviewsSection = () => {
         onClose={() => setSelectedReviewIndex(null)}
         initialIndex={selectedReviewIndex || 0}
         reviews={allReviews}
+      />
+
+      <AddReviewModal
+        isOpen={isAddReviewOpen}
+        onClose={() => setIsAddReviewOpen(false)}
+        productImage="/assets/product/one.png"
       />
     </div>
   );
