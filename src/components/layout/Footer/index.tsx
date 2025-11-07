@@ -6,9 +6,9 @@ import CountrySelector from "@/components/common/CountrySelector";
 const Footer = () => {
   const usefulLinks = [
     { label: "Account", href: "#" },
-    { label: "Help & FAQs", href: "#" },
-    { label: "Shipping & Delivery", href: "#" },
-    { label: "Returns & Exchanges", href: "#" },
+    { label: "Help & FAQs", href: "/faq" },
+    { label: "Shipping & Delivery", href: "/shipping-policy" },
+    { label: "Returns & Exchanges", href: "/refund-policy" },
     { label: "Size Guide", href: "/size" },
     { label: "Online Design Consultation", href: "#" },
   ];
@@ -22,10 +22,10 @@ const Footer = () => {
   ];
 
   const policyLinks = [
-    "Privacy Policy",
-    "Terms of Service",
-    "Shipping Policy",
-    "Refund Policy",
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms of Service", href: "/terms-and-conditions" },
+    { label: "Shipping Policy", href: "/shipping-policy" },
+    { label: "Refund Policy", href: "/refund-policy" },
   ];
 
   const socialLinks = [
@@ -126,10 +126,13 @@ const Footer = () => {
             <h3 className="mb-4">Policies</h3>
             <ul className="space-y-2">
               {policyLinks.map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-gray-950 hover:underline">
-                    {link}
-                  </a>
+                <li key={link.label}>
+                  <Link
+                    to={link.href}
+                    className="text-gray-950 hover:underline"
+                  >
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
