@@ -3,6 +3,8 @@ import ProductImageGrid from "@/components/product/ProductImageGrid";
 import ProductInfo from "@/components/product/ProductInfo";
 import ImageZoomModal from "@/components/product/ImageZoomModal";
 import CustomerReviews from "@/components/product/CustomerReviews";
+import ReviewsSection from "@/components/product/ReviewsSection";
+import ReviewsList from "@/components/product/ReviewsList";
 
 const Product = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -33,6 +35,10 @@ const Product = () => {
         </div>
 
         <CustomerReviews />
+
+        <ReviewsSection />
+
+        <ReviewsList />
       </div>
 
       <ImageZoomModal
