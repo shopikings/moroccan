@@ -5,6 +5,7 @@ import ImageZoomModal from "@/components/product/ImageZoomModal";
 import CustomerReviews from "@/components/product/CustomerReviews";
 import ReviewsSection from "@/components/product/ReviewsSection";
 import ReviewsList from "@/components/product/ReviewsList";
+import YoullAlsoLoveSlider from "@/components/product/YoullAlsoLoveSlider";
 
 const Product = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -39,6 +40,8 @@ const Product = () => {
         <ReviewsSection />
 
         <ReviewsList />
+
+        <YoullAlsoLoveSlider />
       </div>
 
       <ImageZoomModal

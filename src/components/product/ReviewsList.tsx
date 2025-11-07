@@ -115,7 +115,7 @@ const ReviewsList = () => {
   };
 
   return (
-    <div className="mt-12">
+    <div className="my-12">
       <div className="flex items-center justify-between mb-6">
         <p className="text-sm font-montserrat text-gray-600">
           {reviews.length} reviews
@@ -217,16 +217,14 @@ const ReviewsList = () => {
         ))}
       </div>
 
-      {visibleReviews < reviews.length && (
-        <div className="flex justify-center mt-8">
-          <Button
-            onClick={handleShowMore}
-            className="bg-black text-white px-8 py-2 rounded-full font-montserrat text-sm hover:bg-gray-800 transition-colors"
-          >
-            Show More
-          </Button>
-        </div>
-      )}
+      <div className="flex justify-center mt-8">
+        <Button
+          onClick={handleShowMore}
+          className="bg-black text-white px-8 py-4 rounded-none font-montserrat text-sm hover:bg-gray-800 transition-colors"
+        >
+          Show More
+        </Button>
+      </div>
     </div>
   );
 };

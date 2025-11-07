@@ -5,12 +5,12 @@ import CountrySelector from "@/components/common/CountrySelector";
 
 const Footer = () => {
   const usefulLinks = [
-    "Account",
-    "Help & FAQs",
-    "Shipping & Delivery",
-    "Returns & Exchanges",
-    "Size Guide",
-    "Online Design Consultation",
+    { label: "Account", href: "#" },
+    { label: "Help & FAQs", href: "#" },
+    { label: "Shipping & Delivery", href: "#" },
+    { label: "Returns & Exchanges", href: "#" },
+    { label: "Size Guide", href: "/size" },
+    { label: "Online Design Consultation", href: "#" },
   ];
 
   const brandLinks = [
@@ -67,10 +67,22 @@ const Footer = () => {
             <h3 className="mb-4">Useful Links</h3>
             <ul className="space-y-2">
               {usefulLinks.map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-gray-950 hover:underline">
-                    {link}
-                  </a>
+                <li key={link.label}>
+                  {link.href.startsWith("/") ? (
+                    <Link
+                      to={link.href}
+                      className="text-gray-950 hover:underline"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className="text-gray-950 hover:underline"
+                    >
+                      {link.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>

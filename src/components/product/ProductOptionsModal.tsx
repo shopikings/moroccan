@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
@@ -19,9 +20,15 @@ const ProductOptionsModal = ({
   onClose,
   product,
 }: ProductOptionsModalProps) => {
+  const navigate = useNavigate();
   const [selectedColor, setSelectedColor] = useState("Baltic Amber");
   const [selectedSize, setSelectedSize] = useState("Regular (180x70 Cm)");
   const [selectedLength, setSelectedLength] = useState("54");
+
+  const handleViewDetails = () => {
+    onClose();
+    navigate("/product/1");
+  };
 
   const colors = [
     { name: "Baltic Amber", color: "#D4A574" },
@@ -139,7 +146,10 @@ const ProductOptionsModal = ({
                 <Button className="w-[80%] mx-auto flex items-center justify-center bg-black text-white hover:bg-gray-800 font-montserrat font-semibold py-6 rounded-full">
                   Add to Bag
                 </Button>
-                <button className="font-fahkwang text-sm underline hover:text-gray-600 transition-colors mt-16">
+                <button
+                  onClick={handleViewDetails}
+                  className="font-fahkwang text-sm underline hover:text-gray-600 transition-colors mt-16"
+                >
                   View Details
                 </button>
               </div>
