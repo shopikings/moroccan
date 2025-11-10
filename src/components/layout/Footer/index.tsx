@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Facebook, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
 import CountrySelector from "@/components/common/CountrySelector";
+import NewsletterModal from "@/components/common/NewsletterModal";
 
 const Footer = () => {
+  const [isNewsletterOpen, setIsNewsletterOpen] = useState(false);
+
   const usefulLinks = [
     { label: "Account", href: "#" },
     { label: "Help & FAQs", href: "/faq" },
@@ -15,7 +19,7 @@ const Footer = () => {
 
   const brandLinks = [
     { label: "About Us", href: "/about" },
-    { label: "Rewards", href: "#" },
+    { label: "Rewards", href: "#", onClick: () => setIsNewsletterOpen(true) },
     { label: "Affiliate Program", href: "#" },
     { label: "Moroccan Skincare", href: "https://moroccanglow.co.uk/" },
     { label: "Blogs", href: "#" },
@@ -93,7 +97,14 @@ const Footer = () => {
             <ul className="space-y-2">
               {brandLinks.map((link) => (
                 <li key={link.label}>
-                  {link.href.startsWith("/") ? (
+                  {link.onClick ? (
+                    <button
+                      onClick={link.onClick}
+                      className="text-gray-950 hover:underline cursor-pointer"
+                    >
+                      {link.label}
+                    </button>
+                  ) : link.href.startsWith("/") ? (
                     <Link
                       to={link.href}
                       className="text-gray-950 hover:underline"
@@ -211,6 +222,10 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      <NewsletterModal
+        isOpen={isNewsletterOpen}
+        onClose={() => setIsNewsletterOpen(false)}
+      />
     </footer>
   );
 };

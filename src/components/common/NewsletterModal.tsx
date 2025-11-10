@@ -21,7 +21,7 @@ const NewsletterModal = ({ isOpen, onClose }: NewsletterModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[90vw] sm:max-w-lg p-0 bg-[#ECECEC] border-0 [&>button]:hidden z-100">
+      <DialogContent className="max-w-[90vw] sm:max-w-md p-0 bg-[#ECECEC] border-0 [&>button]:hidden z-100">
         <div
           onClick={onClose}
           className="absolute top-2 right-2 sm:top-4 sm:right-4 z-50 cursor-pointer hover:opacity-70 transition-opacity"
@@ -53,7 +53,7 @@ const NewsletterModal = ({ isOpen, onClose }: NewsletterModalProps) => {
               placeholder="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-3 sm:px-6 sm:py-4 text-sm sm:text-base border-2 border-black rounded-md bg-white placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="w-full px-4 py-3 sm:px-6 sm:py-6 text-sm sm:text-base border-2 border-black rounded-md bg-white placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0"
               required
             />
 
@@ -62,13 +62,13 @@ const NewsletterModal = ({ isOpen, onClose }: NewsletterModalProps) => {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 sm:px-6 sm:py-4 text-sm sm:text-base border-2 border-black rounded-md bg-white placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="w-full px-4 py-3 sm:px-6 sm:py-6 text-sm sm:text-base border-2 border-black rounded-md bg-white placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0"
               required
             />
 
             <Button
               type="submit"
-              className="w-full py-3 sm:py-4 text-base sm:text-lg font-montserrat font-semibold bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
+              className="w-full py-3 sm:py-6 text-base sm:text-lg font-montserrat font-semibold bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
             >
               CLAIM YOUR GIFT
             </Button>
