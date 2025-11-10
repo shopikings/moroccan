@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import HeroBanner from "@/components/Home/HeroBanner";
 import BrandMarquee from "@/components/Home/BrandMarquee";
 import ProductSlider from "@/components/Home/ProductSlider";
@@ -8,8 +9,19 @@ import CategorySection from "@/components/Home/CategorySection";
 import DraggableProductSlider from "@/components/Home/DraggableProductSlider";
 import FeaturesSection from "@/components/Home/FeaturesSection";
 import SocialGallery from "@/components/Home/SocialGallery";
+import NewsletterModal from "@/components/common/NewsletterModal";
 
 const Home = () => {
+  const [isNewsletterOpen, setIsNewsletterOpen] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsNewsletterOpen(true);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="w-full">
       <HeroBanner />
@@ -22,6 +34,10 @@ const Home = () => {
       <DraggableProductSlider />
       <FeaturesSection />
       <SocialGallery />
+      <NewsletterModal
+        isOpen={isNewsletterOpen}
+        onClose={() => setIsNewsletterOpen(false)}
+      />
     </div>
   );
 };
