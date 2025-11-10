@@ -14,6 +14,7 @@ import FAQ from "./pages/FAQ";
 import ContactUs from "./pages/ContactUs";
 import Checkout from "./pages/Checkout";
 import Blog from "./pages/Blog";
+import BlogDetail from "./pages/BlogDetail";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -44,6 +45,7 @@ function App() {
           <Route path="contact-us" element={<ContactUs />} />
           <Route path="checkout" element={<Checkout />} />
           <Route path="blog" element={<Blog />} />
+          <Route path="blog/:id" element={<BlogDetail />} />
         </Route>
       </Routes>
     </>

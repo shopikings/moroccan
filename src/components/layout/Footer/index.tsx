@@ -23,7 +23,7 @@ const Footer = () => {
     { label: "Rewards", href: "#", onClick: () => setIsNewsletterOpen(true) },
     { label: "Affiliate Program", href: "#" },
     { label: "Moroccan Skincare", href: "https://moroccanglow.co.uk/" },
-    { label: "Blogs", href: "#" },
+    { label: "Blogs", href: "/blog" },
   ];
 
   const policyLinks = [
