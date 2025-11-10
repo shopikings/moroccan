@@ -11,6 +11,7 @@ import TermsAndConditions from "./pages/TermsAndConditions";
 import RefundPolicy from "./pages/RefundPolicy";
 import ShippingPolicy from "./pages/ShippingPolicy";
 import FAQ from "./pages/FAQ";
+import ContactUs from "./pages/ContactUs";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -38,6 +39,7 @@ function App() {
           <Route path="refund-policy" element={<RefundPolicy />} />
           <Route path="shipping-policy" element={<ShippingPolicy />} />
           <Route path="faq" element={<FAQ />} />
+          <Route path="contact-us" element={<ContactUs />} />
         </Route>
       </Routes>
     </>

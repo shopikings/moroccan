@@ -19,6 +19,7 @@ const Footer = () => {
 
   const brandLinks = [
     { label: "About Us", href: "/about" },
+    { label: "Contact Us", href: "/contact-us" },
     { label: "Rewards", href: "#", onClick: () => setIsNewsletterOpen(true) },
     { label: "Affiliate Program", href: "#" },
     { label: "Moroccan Skincare", href: "https://moroccanglow.co.uk/" },
