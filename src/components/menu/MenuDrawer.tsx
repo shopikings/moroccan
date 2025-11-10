@@ -8,14 +8,14 @@ interface MenuDrawerProps {
 
 const MenuDrawer = ({ isOpen, onClose }: MenuDrawerProps) => {
   const menuItems = [
-    { label: "New Arrivals", link: "/shop" },
-    { label: "Clearance Sale", link: "/shop" },
-    { label: "Caftans", link: "/shop" },
-    { label: "Luxe", link: "/shop" },
-    { label: "Bridal", link: "/shop" },
-    { label: "Gents - Thobe", link: "/shop" },
-    { label: "Accessories", link: "/shop" },
-    { label: "Look Book", link: "/shop" },
+    { label: "New Arrivals", link: "/shop?category=new-arrivals" },
+    { label: "Clearance Sale", link: "/shop?category=clearance-sale" },
+    { label: "Caftans", link: "/shop?category=caftans" },
+    { label: "Luxe", link: "/shop?category=luxe" },
+    { label: "Bridal", link: "/shop?category=bridal" },
+    { label: "Gents - Thobe", link: "/shop?category=gents-thobe" },
+    { label: "Accessories", link: "/shop?category=accessories" },
+    { label: "Look Book", link: "/shop?category=look-book" },
     {
       label: "Moroccan Skincare",
       link: "https://moroccanglow.co.uk/",

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import FilterBar from "@/components/Shop/FilterBar";
 import FilterDrawer from "@/components/Shop/FilterDrawer";
 import { Separator } from "@/components/ui/separator";
@@ -6,10 +7,20 @@ import ProductCard from "@/components/product/ProductCard";
 import Pagination from "@/components/Shop/Pagination";
 
 const Shop = () => {
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get("category");
   const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const productsPerPage = 44;
+
+  const getCategoryTitle = () => {
+    if (!category) return "Shop All";
+    return category
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
   const baseProducts = [
     {
       id: 1,
@@ -100,7 +111,7 @@ const Shop = () => {
         <section className="pt-12 md:pt-16 lg:pt-20">
           <div className="px-4 md:px-8 lg:px-16">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-fahkwang text-center mb-12">
-              Shop All
+              {getCategoryTitle()}
             </h1>
           </div>
 
