@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { BlogCard } from "../components/Blog/BlogCard";
 import Pagination from "@/components/Shop/Pagination";
 
-const blogPosts = [
+const displayPosts = [
   {
     id: "1",
     image: "/assets/blog/blog-one.png",
@@ -174,10 +174,19 @@ const POSTS_PER_PAGE = 6;
 const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(blogPosts.length / POSTS_PER_PAGE);
+  const allPosts = displayPosts.map((post) => ({
+    id: post.id,
+    image: post.image,
+    category: post.category,
+    title: post.title,
+    excerpt: post.excerpt,
+    date: post.date,
+  }));
+
+  const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
-  const currentPosts = blogPosts.slice(startIndex, endIndex);
+  const currentPosts = allPosts.slice(startIndex, endIndex);
   return (
     <div className="w-full bg-background min-h-screen py-10">
       <div className="w-[90vw] mx-auto">

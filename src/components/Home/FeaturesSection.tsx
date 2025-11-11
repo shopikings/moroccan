@@ -1,29 +1,15 @@
-const FeaturesSection = () => {
-  const features = [
-    {
-      icon: "/assets/icons/shipping.svg",
-      title: "FREE SHIPPING",
-      description: "Fast & Free Shipping in UK on orders above £100",
-    },
-    {
-      icon: "/assets/icons/return.svg",
-      title: "28 DAY RETURNS",
-      description: "Easy returns & exchanges",
-    },
-    {
-      icon: "/assets/icons/star.svg",
-      title: "5-STAR CARE",
-      description: "We're here for you anytime, ",
-      email: "hello@moroccanglam.com",
-    },
-    {
-      icon: "/assets/icons/feel-good.svg",
-      title: "FEEL GOOD",
-      description:
-        "Sustainable purchases mean you're doing good for you, us, and the planet.",
-    },
-  ];
+interface Feature {
+  icon: string;
+  title: string;
+  description: string;
+  email?: string;
+}
 
+interface FeaturesSectionProps {
+  features: Feature[];
+}
+
+const FeaturesSection = ({ features }: FeaturesSectionProps) => {
   const renderDescription = (feature: (typeof features)[0]) => {
     if (feature.email) {
       return (

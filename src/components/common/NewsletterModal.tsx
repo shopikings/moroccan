@@ -33,19 +33,32 @@ const NewsletterModal = ({ isOpen, onClose }: NewsletterModalProps) => {
           />
         </div>
 
-        <div className="p-6 sm:p-8 md:p-12 text-center">
-          <img
-            src="/assets/five-percent-off.png"
-            className="mx-auto w-3/4 sm:w-auto mb-4 sm:mb-6"
-            alt="5% OFF"
-          />
+        <div className="p-6 sm:p-8 text-center">
+          <div className="">
+            <div className="flex items-center justify-center gap-1 mb-0">
+              <div className="text-8xl sm:text-9xl md:text-[12rem] font-medium font-family-trirong leading-none text-black">
+                5
+              </div>
+              <div className="flex flex-col justify-center h-32 sm:h-36 md:h-48">
+                <div className="text-5xl sm:text-6xl md:text-8xl font-medium font-family-trirong text-black italic leading-none">
+                  %
+                </div>
+                <div className="text-4xl sm:text-5xl md:text-4xl font-medium font-family-trirong text-black uppercase leading-none">
+                  OFF
+                </div>
+              </div>
+            </div>
+            <div className="text-lg sm:text-xl font-montserrat text-black -mt-4 mb-3">
+              YOUR FIRST ORDER
+            </div>
+          </div>
 
-          <h2
+          <h3
             className="text-base sm:text-lg md:text-xl font-montserrat mb-6 sm:mb-8 px-2"
             style={{ color: "#C09A61" }}
           >
             Enjoy 5% off your order, our way to welcome you
-          </h2>
+          </h3>
 
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <Input
