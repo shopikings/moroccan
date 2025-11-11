@@ -55,11 +55,15 @@ const Wishlist = () => {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+            <div
+              className={`flex ${
+                wishlist.length < 4 ? "justify-center" : "justify-start"
+              } flex-wrap gap-6 mb-12`}
+            >
               {wishlist.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white rounded-md p-4 flex flex-col items-center"
+                  className="bg-white rounded-md p-4 flex flex-col items-center w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-18px)]"
                 >
                   <div className="w-full mb-6">
                     <img
