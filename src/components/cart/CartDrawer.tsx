@@ -1,29 +1,26 @@
-import { X, Minus, Plus } from "lucide-react";
+import { X, Minus, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useCart } from "../../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 interface CartDrawerProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-interface CartItem {
-  id: number;
-  name: string;
-  size: string;
-  price: number;
-  quantity: number;
-  image: string;
-}
-
 const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
-  const cartItems: CartItem[] = [];
+  const { cart, updateQuantity, removeFromCart, getCartTotal, getCartCount } =
+    useCart();
+  const navigate = useNavigate();
 
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-  const discount = 400;
+  const subtotal = getCartTotal();
+  const discount = 0;
   const total = subtotal - discount;
+
+  const handleCheckout = () => {
+    onClose();
+    navigate("/checkout");
+  };
 
   return (
     <>
@@ -42,7 +39,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-center p-4 border-b border-gray-300 relative">
             <h2 className="font-fahkwang text-xl font-semibold">
-              Cart ({cartItems.length})
+              Cart ({getCartCount()})
             </h2>
             <button
               onClick={onClose}
@@ -53,7 +50,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
           </div>
 
           <div className="flex-1 overflow-y-auto p-4">
-            {cartItems.length === 0 ? (
+            {cart.length === 0 ? (
               <div className="flex items-center justify-center h-full">
                 <p className="font-fahkwang text-lg text-gray-600">
                   No items in cart
@@ -65,37 +62,64 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                   You Are Eligible For Free Shipping.
                 </p>
 
-                {cartItems.map((item) => (
+                {cart.map((item) => (
                   <div
                     key={item.id}
                     className="flex gap-4 mb-6 border-t border-black pt-4"
                   >
                     <img
-                      src={item?.image}
+                      src={item.image}
                       alt={item.name}
                       className="w-24 h-32 object-cover rounded"
                     />
                     <div className="flex-1">
-                      <h3 className="font-fahkwang text-sm font-medium mb-1">
-                        {item.name}
-                      </h3>
-                      <p className="font-fahkwang text-sm mb-3">{item.size}</p>
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center border border-[#5E5E5E] rounded-full px-4 py-2">
-                          <button className="text-[#5E5E5E] cursor-pointer hover:text-gray-900">
-                            <Minus className="w-4 h-4" />
+                      <div className="flex justify-between items-start mb-1">
+                        <h3 className="font-fahkwang text-sm font-medium">
+                          {item.name}
+                        </h3>
+                        <button
+                          onClick={() => removeFromCart(item.id)}
+                          className="text-red-500 hover:text-red-700"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                      {item.size && (
+                        <p className="font-fahkwang text-xs text-gray-600">
+                          Size: {item.size}
+                        </p>
+                      )}
+                      {item.color && (
+                        <p className="font-fahkwang text-xs text-gray-600 mb-2">
+                          Color: {item.color}
+                        </p>
+                      )}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center border border-[#5E5E5E] rounded-full px-3 py-1">
+                          <button
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity - 1)
+                            }
+                            className="text-[#5E5E5E] cursor-pointer hover:text-gray-900"
+                          >
+                            <Minus className="w-3 h-3" />
                           </button>
-                          <span className="mx-4 text-[#5E5E5E] font-montserrat text-sm">
+                          <span className="mx-3 text-[#5E5E5E] font-montserrat text-sm">
                             {item.quantity}
                           </span>
-                          <button className="text-[#5E5E5E] cursor-pointer hover:text-gray-900">
-                            <Plus className="w-4 h-4" />
+                          <button
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity + 1)
+                            }
+                            className="text-[#5E5E5E] cursor-pointer hover:text-gray-900"
+                          >
+                            <Plus className="w-3 h-3" />
                           </button>
                         </div>
+                        <div className="font-montserrat text-sm font-medium">
+                          £{(item.price * item.quantity).toFixed(2)}
+                        </div>
                       </div>
-                    </div>
-                    <div className="font-montserrat text-sm font-medium">
-                      {item.price} £
                     </div>
                   </div>
                 ))}
@@ -103,65 +127,35 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
             )}
           </div>
 
-          <div className="p-4">
-            <button className="w-full text-center font-fahkwang text-sm font-medium py-3 border-t border-gray-300 mb-4">
-              Estimate shipping
-            </button>
+          <div className="p-4 border-t border-gray-300">
+            <div className="space-y-2 mb-4">
+              <div className="flex justify-between font-montserrat text-sm">
+                <span>Subtotal</span>
+                <span>£{subtotal.toFixed(2)}</span>
+              </div>
+              {discount > 0 && (
+                <div className="flex justify-between font-fahkwang text-sm">
+                  <span className="text-black">DISCOUNT</span>
+                  <span className="text-gray-600">-£{discount.toFixed(2)}</span>
+                </div>
+              )}
+              <div className="flex justify-between font-montserrat text-base font-semibold pt-2 border-t">
+                <span>TOTAL</span>
+                <span>£{total.toFixed(2)}</span>
+              </div>
+            </div>
 
-            {cartItems.length > 0 ? (
-              <>
-                <div className="space-y-2 mb-4">
-                  <div className="flex justify-between font-fahkwang text-sm">
-                    <span className="text-black">SOFT LAUNCH</span>
-                    <span className="text-gray-600">-{discount} £</span>
-                  </div>
-                  <div className="flex justify-between font-montserrat text-base font-semibold">
-                    <span>TOTAL</span>
-                    <span>{total} £</span>
-                  </div>
-                </div>
-
-                <div className="flex gap-3">
-                  <Button
-                    variant="outline"
-                    className="flex-1 rounded-full border-2 border-black bg-transparent hover:bg-gray-100 font-montserrat"
-                  >
-                    View Card
-                  </Button>
-                  <Button className="flex-1 rounded-full bg-black text-white hover:bg-gray-800 font-montserrat">
-                    Checkout
-                  </Button>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="space-y-2 mb-4">
-                  <div className="flex justify-between font-fahkwang text-sm">
-                    <span className="text-black">SOFT LAUNCH</span>
-                    <span className="text-gray-600">0 £</span>
-                  </div>
-                  <div className="flex justify-between font-montserrat text-base font-semibold">
-                    <span>TOTAL</span>
-                    <span>0 £</span>
-                  </div>
-                </div>
-
-                <div className="flex gap-3">
-                  <Button
-                    variant="outline"
-                    className="flex-1 rounded-full border-2 border-black bg-transparent hover:bg-gray-100 font-montserrat"
-                  >
-                    View Card
-                  </Button>
-                  <Button
-                    disabled
-                    className="flex-1 rounded-full bg-gray-400 text-white cursor-not-allowed font-montserrat"
-                  >
-                    Checkout
-                  </Button>
-                </div>
-              </>
-            )}
+            <Button
+              onClick={handleCheckout}
+              disabled={cart.length === 0}
+              className={`w-full rounded-full font-montserrat ${
+                cart.length === 0
+                  ? "bg-gray-400 text-white cursor-not-allowed"
+                  : "bg-black text-white hover:bg-gray-800"
+              }`}
+            >
+              Proceed to Checkout
+            </Button>
           </div>
         </div>
       </div>

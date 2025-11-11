@@ -27,10 +27,12 @@ const Product = () => {
           />
           <div className="lg:sticky lg:top-26 lg:self-start">
             <ProductInfo
+              productId="product-1"
               name="Printed Modal Hijab - Cloudy Stone"
               salePrice="£11.00 GBP"
               originalPrice="£15.00 GBP"
               discount={27}
+              productImage={productImages[0]}
             />
           </div>
         </div>

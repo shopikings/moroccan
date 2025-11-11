@@ -1,14 +1,45 @@
 import { Button } from "../ui/button";
+import { useCart } from "../../context/CartContext";
 
 interface ProductActionsProps {
   inStock?: boolean;
+  productId: string;
+  productName: string;
+  productPrice: number;
+  productImage: string;
+  selectedSize?: string;
+  selectedColor?: string;
 }
 
-const ProductActions = ({ inStock = true }: ProductActionsProps) => {
+const ProductActions = ({
+  inStock = true,
+  productId,
+  productName,
+  productPrice,
+  productImage,
+  selectedSize,
+  selectedColor,
+}: ProductActionsProps) => {
+  const { addToCart } = useCart();
+
+  const handleAddToBag = () => {
+    addToCart({
+      id: `${productId}-${selectedSize}-${selectedColor}`,
+      name: productName,
+      price: productPrice,
+      image: productImage,
+      size: selectedSize,
+      color: selectedColor,
+    });
+  };
+
   return (
     <div className="space-y-3">
       {inStock ? (
-        <Button className="w-full bg-black text-white py-6 rounded-full font-montserrat text-sm hover:bg-gray-800 transition-colors">
+        <Button
+          onClick={handleAddToBag}
+          className="w-full bg-black text-white py-6 rounded-full font-montserrat text-sm hover:bg-gray-800 transition-colors"
+        >
           Add to Bag
         </Button>
       ) : (

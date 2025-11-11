@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { useCart } from "../../context/CartContext";
 
 interface ProductOptionsModalProps {
   isOpen: boolean;
   onClose: () => void;
   product: {
+    id: string;
     name: string;
     price: string;
     image: string;
@@ -21,9 +23,22 @@ const ProductOptionsModal = ({
   product,
 }: ProductOptionsModalProps) => {
   const navigate = useNavigate();
+  const { addToCart } = useCart();
   const [selectedColor, setSelectedColor] = useState("Baltic Amber");
   const [selectedSize, setSelectedSize] = useState("Regular (180x70 Cm)");
   const [selectedLength, setSelectedLength] = useState("54");
+
+  const handleAddToBag = () => {
+    addToCart({
+      id: `${product.id}-${selectedSize}-${selectedColor}`,
+      name: product.name,
+      price: parseFloat(product.price.replace(/[^0-9.]/g, "")),
+      image: product.image,
+      size: selectedSize,
+      color: selectedColor,
+    });
+    onClose();
+  };
 
   const handleViewDetails = () => {
     onClose();
@@ -143,7 +158,10 @@ const ProductOptionsModal = ({
               </div>
 
               <div className="pt-12 pb-8">
-                <Button className="w-[80%] mx-auto flex items-center justify-center bg-black text-white hover:bg-gray-800 font-montserrat font-semibold py-6 rounded-full">
+                <Button
+                  onClick={handleAddToBag}
+                  className="w-[80%] mx-auto flex items-center justify-center bg-black text-white hover:bg-gray-800 font-montserrat font-semibold py-6 rounded-full"
+                >
                   Add to Bag
                 </Button>
                 <button

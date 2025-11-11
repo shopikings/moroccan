@@ -8,17 +8,21 @@ import CompleteYourLook from "./CompleteYourLook";
 import { Button } from "../ui/button";
 
 interface ProductInfoProps {
+  productId: string;
   name: string;
   salePrice: string;
   originalPrice: string;
   discount: number;
+  productImage: string;
 }
 
 const ProductInfo = ({
+  productId,
   name,
   salePrice,
   originalPrice,
   discount,
+  productImage,
 }: ProductInfoProps) => {
   const [selectedColor, setSelectedColor] = useState("Cloudy Stone");
   const [selectedSize, setSelectedSize] = useState("Regular (180x70 cm)");
@@ -81,7 +85,14 @@ const ProductInfo = ({
         onSizeChange={setSelectedSize}
       />
 
-      <ProductActions />
+      <ProductActions
+        productId={productId}
+        productName={name}
+        productPrice={parseFloat(salePrice.replace("£", ""))}
+        productImage={productImage}
+        selectedSize={selectedSize}
+        selectedColor={selectedColor}
+      />
 
       <ProductAccordions />
 
