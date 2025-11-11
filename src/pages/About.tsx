@@ -158,7 +158,32 @@ const About = () => {
       <div className="px-10 pb-5 pt-12 mx-auto">
         <ProductSlider title={"Our Recommendations"} />
       </div>
-      <FeaturesSection />
+      <FeaturesSection
+        features={[
+          {
+            icon: "/assets/icons/shipping.svg",
+            title: "FREE SHIPPING",
+            description: "Fast & Free Shipping in UK on orders above £100",
+          },
+          {
+            icon: "/assets/icons/return.svg",
+            title: "28 DAY RETURNS",
+            description: "Easy returns & exchanges",
+          },
+          {
+            icon: "/assets/icons/star.svg",
+            title: "5-STAR CARE",
+            description: "We're here for you anytime, ",
+            email: "hello@moroccanglam.com",
+          },
+          {
+            icon: "/assets/icons/feel-good.svg",
+            title: "FEEL GOOD",
+            description:
+              "Sustainable purchases mean you're doing good for you, us, and the planet.",
+          },
+        ]}
+      />
       <SocialGallery />
     </div>
   );
