@@ -1,5 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 import { CartProvider } from "./context/CartContext";
 import Layout from "./components/layout/Layout";
 import Home from "./pages/Home";
@@ -30,6 +31,24 @@ function ScrollToTop() {
 function App() {
   return (
     <CartProvider>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: "#363636",
+            color: "#fff",
+            fontFamily: "Montserrat, sans-serif",
+          },
+          success: {
+            duration: 3000,
+            iconTheme: {
+              primary: "#4ade80",
+              secondary: "#fff",
+            },
+          },
+        }}
+      />
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout />}>

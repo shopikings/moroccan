@@ -5,6 +5,7 @@ import {
   useEffect,
   ReactNode,
 } from "react";
+import toast from "react-hot-toast";
 
 export interface CartItem {
   id: string;
@@ -43,30 +44,33 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, [cart]);
 
   const addToCart = (item: Omit<CartItem, "quantity">) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find(
-        (cartItem) =>
-          cartItem.id === item.id &&
-          cartItem.size === item.size &&
-          cartItem.color === item.color
-      );
+    const existingItem = cart.find(
+      (cartItem) =>
+        cartItem.id === item.id &&
+        cartItem.size === item.size &&
+        cartItem.color === item.color
+    );
 
-      if (existingItem) {
-        return prevCart.map((cartItem) =>
+    if (existingItem) {
+      setCart((prevCart) =>
+        prevCart.map((cartItem) =>
           cartItem.id === item.id &&
           cartItem.size === item.size &&
           cartItem.color === item.color
             ? { ...cartItem, quantity: cartItem.quantity + 1 }
             : cartItem
-        );
-      }
-
-      return [...prevCart, { ...item, quantity: 1 }];
-    });
+        )
+      );
+      toast.success("Product quantity updated in cart!");
+    } else {
+      setCart((prevCart) => [...prevCart, { ...item, quantity: 1 }]);
+      toast.success("Product added to cart!");
+    }
   };
 
   const removeFromCart = (id: string) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+    toast.success("Product removed from cart");
   };
 
   const updateQuantity = (id: string, quantity: number) => {
