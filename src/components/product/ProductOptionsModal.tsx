@@ -56,9 +56,15 @@ const ProductOptionsModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-5xl max-h-[50vh] p-0 gap-0 overflow-hidden">
+      <DialogContent
+        className="max-w-5xl max-h-[50vh] p-0 gap-0 overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button
-          onClick={onClose}
+          onClick={(e) => {
+            e.stopPropagation();
+            onClose();
+          }}
           className="absolute right-4 top-4 z-50 p-2 rounded-full bg-white hover:bg-gray-100 transition-colors"
         >
           <X className="w-5 h-5" />
@@ -159,13 +165,19 @@ const ProductOptionsModal = ({
 
               <div className="pt-12 pb-8">
                 <Button
-                  onClick={handleAddToBag}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleAddToBag();
+                  }}
                   className="w-[80%] mx-auto flex items-center justify-center bg-black text-white hover:bg-gray-800 font-montserrat font-semibold py-6 rounded-full"
                 >
                   Add to Bag
                 </Button>
                 <button
-                  onClick={handleViewDetails}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleViewDetails();
+                  }}
                   className="font-fahkwang text-sm underline hover:text-gray-600 transition-colors mt-16"
                 >
                   View Details

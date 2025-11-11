@@ -109,7 +109,7 @@ const ProductCard = ({
         <ProductOptionsModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          product={{ name, price, image, hoverImage }}
+          product={{ id: id.toString(), name, price, image, hoverImage }}
         />
       </div>
     </>
