@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search } from "lucide-react";
+import { Search, Heart } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useNavigate } from "react-router-dom";
 import CartDrawer from "@/components/cart/CartDrawer";
@@ -61,6 +61,12 @@ const Navbar = () => {
                 alt="User"
                 className="w-5 h-5"
               />
+            </button>
+            <button
+              onClick={() => navigate("/wishlist")}
+              className="p-1 cursor-pointer hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <Heart className="w-5 h-5 text-gray-700" />
             </button>
             <button
               onClick={() => setIsCartOpen(true)}

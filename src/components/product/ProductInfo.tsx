@@ -6,6 +6,8 @@ import ProductActions from "./ProductActions";
 import ProductAccordions from "./ProductAccordions";
 import CompleteYourLook from "./CompleteYourLook";
 import { Button } from "../ui/button";
+import { Heart } from "lucide-react";
+import { useWishlist } from "../../context/WishlistContext";
 
 interface ProductInfoProps {
   productId: string;
@@ -26,6 +28,17 @@ const ProductInfo = ({
 }: ProductInfoProps) => {
   const [selectedColor, setSelectedColor] = useState("Cloudy Stone");
   const [selectedSize, setSelectedSize] = useState("Regular (180x70 cm)");
+  const { addToWishlist, isInWishlist } = useWishlist();
+
+  const handleAddToWishlist = () => {
+    addToWishlist({
+      id: productId,
+      name,
+      price: parseFloat(salePrice.replace("£", "")),
+      image: productImage,
+      color: selectedColor,
+    });
+  };
 
   const colors = [
     { name: "Burgundy", value: "#800020" },
@@ -60,8 +73,22 @@ const ProductInfo = ({
   ];
 
   return (
-    <div className="lg:pl-8">
-      <h1 className="text-5xl font-family-montserrat mb-4">{name}</h1>
+    <div className="lg:px-8">
+      <div className="flex items-start gap-2 mb-4">
+        <h1 className="text-5xl font-family-montserrat mb-4">{name}</h1>
+        <button
+          onClick={handleAddToWishlist}
+          className="p-1 cursor-pointer hover:bg-gray-100 rounded-full transition-colors"
+        >
+          <Heart
+            className={`w-7 h-7 ${
+              isInWishlist(productId)
+                ? "fill-red-500 text-red-500"
+                : "text-gray-700"
+            }`}
+          />
+        </button>
+      </div>
 
       <ProductPrice
         salePrice={salePrice}

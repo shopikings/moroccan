@@ -20,7 +20,7 @@ const Product = () => {
   return (
     <div className="w-full bg-[#F7F6F0] min-h-screen">
       <div className="px-4 md:px-6 lg:px-8 py-8 md:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-[57%_43%] gap-6 lg:gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-6 lg:gap-4">
           <ProductImageGrid
             images={productImages}
             onImageClick={setSelectedImage}

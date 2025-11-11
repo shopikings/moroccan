@@ -1,36 +1,37 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useWishlist } from "../context/WishlistContext";
+import { useCart } from "../context/CartContext";
 
 const Wishlist = () => {
-  const [wishlistItems] = useState([
-    {
-      id: "1",
-      name: "Printed Modal Hijab",
-      color: "Cloudy Stone",
-      price: 19,
-      image: "/assets/product/one.png",
-    },
-    {
-      id: "2",
-      name: "Printed Modal Hijab",
-      color: "Cloudy Stone",
-      price: 19,
-      image: "/assets/product/two.png",
-    },
-  ]);
+  const { wishlist, removeFromWishlist } = useWishlist();
+  const { addToCart } = useCart();
 
-  const totalPrice = wishlistItems.reduce((sum, item) => sum + item.price, 0);
+  const totalPrice = wishlist.reduce((sum, item) => sum + item.price, 0);
 
   const handleRemoveFromWishlist = (id: string) => {
-    console.log("Remove item:", id);
+    removeFromWishlist(id);
   };
 
-  const handleAddToCart = (id: string) => {
-    console.log("Add to cart:", id);
+  const handleAddToCart = (item: (typeof wishlist)[0]) => {
+    addToCart({
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      image: item.image,
+      color: item.color,
+    });
   };
 
   const handleAddAllToCart = () => {
-    console.log("Add all to cart");
+    wishlist.forEach((item) => {
+      addToCart({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        image: item.image,
+        color: item.color,
+      });
+    });
   };
 
   return (
@@ -40,7 +41,7 @@ const Wishlist = () => {
           Wishlist
         </h1>
 
-        {wishlistItems.length === 0 ? (
+        {wishlist.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20">
             <p className="text-gray-600 font-montserrat text-lg mb-8">
               Seems you have no items on your wishlist yet!
@@ -55,7 +56,7 @@ const Wishlist = () => {
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-              {wishlistItems.map((item) => (
+              {wishlist.map((item) => (
                 <div
                   key={item.id}
                   className="bg-white rounded-md p-4 flex flex-col items-center"
@@ -78,7 +79,7 @@ const Wishlist = () => {
 
                     <div className="flex justify-center">
                       <button
-                        onClick={() => handleAddToCart(item.id)}
+                        onClick={() => handleAddToCart(item)}
                         className="w-[80%] py-3 bg-black text-white border-2 border-black hover:bg-transparent hover:text-black transition-colors font-montserrat text-sm rounded-md"
                       >
                         add - £{item.price}

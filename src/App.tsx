@@ -2,6 +2,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { CartProvider } from "./context/CartContext";
+import { WishlistProvider } from "./context/WishlistContext";
 import Layout from "./components/layout/Layout";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -31,46 +32,51 @@ function ScrollToTop() {
 
 function App() {
   return (
-    <CartProvider>
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          duration: 3000,
-          style: {
-            background: "#363636",
-            color: "#fff",
-            fontFamily: "Montserrat, sans-serif",
-          },
-          success: {
+    <WishlistProvider>
+      <CartProvider>
+        <Toaster
+          position="top-right"
+          toastOptions={{
             duration: 3000,
-            iconTheme: {
-              primary: "#4ade80",
-              secondary: "#fff",
+            style: {
+              background: "#363636",
+              color: "#fff",
+              fontFamily: "Montserrat, sans-serif",
             },
-          },
-        }}
-      />
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="size" element={<Size />} />
-          <Route path="about" element={<About />} />
-          <Route path="shop" element={<Shop />} />
-          <Route path="product/:id" element={<Product />} />
-          <Route path="privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="terms-and-conditions" element={<TermsAndConditions />} />
-          <Route path="refund-policy" element={<RefundPolicy />} />
-          <Route path="shipping-policy" element={<ShippingPolicy />} />
-          <Route path="faq" element={<FAQ />} />
-          <Route path="contact-us" element={<ContactUs />} />
-          <Route path="wishlist" element={<Wishlist />} />
-          <Route path="checkout" element={<Checkout />} />
-          <Route path="blog" element={<Blog />} />
-          <Route path="blog/:id" element={<BlogDetail />} />
-        </Route>
-      </Routes>
-    </CartProvider>
+            success: {
+              duration: 3000,
+              iconTheme: {
+                primary: "#4ade80",
+                secondary: "#fff",
+              },
+            },
+          }}
+        />
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="size" element={<Size />} />
+            <Route path="about" element={<About />} />
+            <Route path="shop" element={<Shop />} />
+            <Route path="product/:id" element={<Product />} />
+            <Route path="privacy-policy" element={<PrivacyPolicy />} />
+            <Route
+              path="terms-and-conditions"
+              element={<TermsAndConditions />}
+            />
+            <Route path="refund-policy" element={<RefundPolicy />} />
+            <Route path="shipping-policy" element={<ShippingPolicy />} />
+            <Route path="faq" element={<FAQ />} />
+            <Route path="contact-us" element={<ContactUs />} />
+            <Route path="wishlist" element={<Wishlist />} />
+            <Route path="checkout" element={<Checkout />} />
+            <Route path="blog" element={<Blog />} />
+            <Route path="blog/:id" element={<BlogDetail />} />
+          </Route>
+        </Routes>
+      </CartProvider>
+    </WishlistProvider>
   );
 }
 

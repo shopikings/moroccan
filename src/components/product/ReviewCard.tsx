@@ -12,7 +12,7 @@ const ReviewCard = ({ image, name, description, onClick }: ReviewCardProps) => {
       onClick={onClick}
     >
       <img src={image} alt={name} className="w-full h-full object-cover" />
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+      <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/70 to-transparent p-3">
         <h3 className="text-sm font-montserrat font-semibold mb-1 text-white">
           {name}
         </h3>
