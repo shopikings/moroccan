@@ -140,7 +140,7 @@ const TrendingNow = () => {
               {videoCards.map((card) => (
                 <div
                   key={card.id}
-                  className="relative aspect-3/4 bg-gray-200 rounded-lg overflow-hidden shrink-0 w-[calc(25%-1.5rem)] cursor-pointer group"
+                  className="relative aspect-3/4 bg-gray-200 rounded-lg overflow-hidden shrink-0 w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.333%-1.33rem)] lg:w-[calc(33.333%-1.33rem)] xl:w-[calc(25%-1.5rem)] cursor-pointer group"
                   onClick={() => togglePlayPause(card.id)}
                 >
                   <video

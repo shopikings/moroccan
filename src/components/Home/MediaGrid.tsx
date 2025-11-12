@@ -4,7 +4,7 @@ const MediaGrid = () => {
   return (
     <div className="w-full bg-background py-4 px-0">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-0">
-        <div className="relative overflow-hidden bg-gray-100 h-[400px] sm:h-[500px] md:h-[700px] xl:h-[750px] 2xl:h-[850px]">
+        <div className="relative overflow-hidden bg-gray-100 h-full md:h-[700px] xl:h-[750px] 2xl:h-[850px]">
           <img
             src="/assets/home/new.png"
             alt="Collection 1"
@@ -27,7 +27,7 @@ const MediaGrid = () => {
           </div>
         </div>
 
-        <div className="relative overflow-hidden bg-gray-100 h-[400px] sm:h-[500px] md:h-[700px] xl:h-[750px] 2xl:h-[850px]">
+        <div className="relative overflow-hidden bg-gray-100 h-full md:h-[700px] xl:h-[750px] 2xl:h-[850px]">
           <video
             autoPlay
             loop
@@ -54,7 +54,7 @@ const MediaGrid = () => {
           </div>
         </div>
 
-        <div className="relative overflow-hidden bg-gray-100 h-[400px] sm:h-[500px] md:h-[700px] xl:h-[750px] 2xl:h-[850px]">
+        <div className="relative overflow-hidden bg-gray-100 h-full md:h-[700px] xl:h-[750px] 2xl:h-[850px]">
           <img
             src="/assets/home/best-seller.png"
             alt="Collection 2"
