@@ -12,25 +12,25 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <nav className="w-full bg-background border-b border-gray-200 px-8 py-4">
+    <nav className="w-full bg-background border-b border-gray-200 px-2 md:px-8 py-4">
       <div className="flex items-center justify-between max-w-8xl mx-auto">
         <div
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="flex items-center space-x-2 cursor-pointer "
+          className="flex items-center space-x-0 cursor-pointer "
         >
           <button className="flex flex-col justify-center items-center w-6 h-6 space-y-1">
             <div
-              className={`w-5 h-0.5 bg-gray-800 transition-all duration-300 origin-center ${
+              className={`w-3 h-0.5 bg-gray-800 transition-all duration-300 origin-center ${
                 isMenuOpen ? "rotate-45 translate-y-[3px]" : ""
               }`}
             ></div>
             <div
-              className={`w-5 h-0.5 bg-gray-800 transition-all duration-300 origin-center ${
+              className={`w-3 h-0.5 bg-gray-800 transition-all duration-300 origin-center ${
                 isMenuOpen ? "-rotate-45 -translate-y-[3px]" : ""
               }`}
             ></div>
           </button>
-          <span className="font-montserrat text-sm font-medium text-gray-800 ml-2">
+          <span className="font-montserrat text-sm font-medium text-gray-800 ml-0.5">
             MENU
           </span>
         </div>
@@ -42,20 +42,25 @@ const Navbar = () => {
           <img
             src="/assets/logo.svg"
             alt="Moroccan Logo"
-            className="h-12 w-auto"
+            className="h-8 md:h-12 w-auto"
           />
         </div>
 
         <div className="flex items-center space-x-4 pr-5">
-          <CountrySelector triggerClassName="w-auto border-0 bg-transparent shadow-none focus:ring-0 px-2" />
+          <div className="hidden md:block">
+            <CountrySelector triggerClassName="w-auto border-0 bg-transparent shadow-none focus:ring-0 px-2" />
+          </div>
 
-          <Separator orientation="vertical" className="h-6 bg-black" />
+          <Separator
+            orientation="vertical"
+            className="h-6 bg-black hidden md:block"
+          />
 
           <div className="flex items-center space-x-3">
-            <button className="p-1 cursor-pointer hover:bg-gray-100 rounded-full transition-colors">
+            <button className="p-1 cursor-pointer hover:bg-gray-100 rounded-full transition-colors hidden md:block">
               <Search className="w-5 h-5 text-gray-700" />
             </button>
-            <button className="p-1 cursor-pointer hover:bg-gray-100 rounded-full transition-colors">
+            <button className="p-1 cursor-pointer hover:bg-gray-100 rounded-full transition-colors hidden md:block">
               <img
                 src="/assets/icons/person.svg"
                 alt="User"
