@@ -9,6 +9,7 @@ import SocialGallery from "@/components/Home/SocialGallery";
 const About = () => {
   const [showBanner, setShowBanner] = useState(true);
   const [hoveredTooltip, setHoveredTooltip] = useState<string | null>(null);
+  const [mobileTooltip, setMobileTooltip] = useState<string | null>(null);
 
   const tooltipContent = {
     "moroccan-design": {
@@ -30,6 +31,35 @@ const About = () => {
 
   return (
     <div className="w-full">
+      {mobileTooltip && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/50 z-50 md:hidden"
+            onClick={() => setMobileTooltip(null)}
+          />
+          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[400px] bg-[#F7F6F0] border-2 border-black rounded-lg p-6 shadow-lg z-50 md:hidden">
+            <button
+              onClick={() => setMobileTooltip(null)}
+              className="absolute top-2 right-2 p-1 hover:bg-gray-200 rounded-full"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <h3 className="text-center text-xl font-bold mb-3 text-black">
+              {
+                tooltipContent[mobileTooltip as keyof typeof tooltipContent]
+                  .title
+              }
+            </h3>
+            <p className="text-center text-sm font-normal text-gray-700 leading-relaxed">
+              {
+                tooltipContent[mobileTooltip as keyof typeof tooltipContent]
+                  .description
+              }
+            </p>
+          </div>
+        </>
+      )}
+
       <div className="bg-[#F7F6F0]">
         <section className="pt-12 md:pt-16 lg:pt-20 px-4 md:px-8 lg:px-16">
           <div className="max-w-[1200px] mx-auto">
@@ -47,10 +77,11 @@ const About = () => {
                   className="inline-block underline decoration-[#F4B32E] decoration-2 relative cursor-pointer"
                   onMouseEnter={() => setHoveredTooltip("moroccan-design")}
                   onMouseLeave={() => setHoveredTooltip(null)}
+                  onClick={() => setMobileTooltip("moroccan-design")}
                 >
                   Moroccan&nbsp;design
                   {hoveredTooltip === "moroccan-design" && (
-                    <span className="absolute left-0 top-full mt-2 w-[400px] max-w-[90vw] bg-[#F7F6F0] border-2 border-black rounded-lg p-4 shadow-lg z-50 text-left">
+                    <span className="hidden md:block absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[400px] max-w-[90vw] bg-[#F7F6F0] border-2 border-black rounded-lg p-4 shadow-lg z-50 text-left">
                       <span className="block text-center text-xl font-bold mb-2 text-black">
                         {tooltipContent["moroccan-design"].title}
                       </span>
@@ -69,10 +100,11 @@ const About = () => {
                   className="inline-block underline decoration-[#F4B32E] decoration-2 relative cursor-pointer"
                   onMouseEnter={() => setHoveredTooltip("premium-fabrics")}
                   onMouseLeave={() => setHoveredTooltip(null)}
+                  onClick={() => setMobileTooltip("premium-fabrics")}
                 >
                   premium&nbsp;fabrics
                   {hoveredTooltip === "premium-fabrics" && (
-                    <span className="absolute left-0 top-full mt-2 w-[400px] max-w-[90vw] bg-[#F7F6F0] border-2 border-black rounded-lg p-4 shadow-lg z-50 text-left">
+                    <span className="hidden md:block absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[400px] max-w-[90vw] bg-[#F7F6F0] border-2 border-black rounded-lg p-4 shadow-lg z-50 text-left">
                       <span className="block text-center text-xl font-bold mb-2 text-black">
                         {tooltipContent["premium-fabrics"].title}
                       </span>
@@ -97,10 +129,11 @@ const About = () => {
                   className="inline-block underline decoration-[#F4B32E] decoration-2 relative cursor-pointer"
                   onMouseEnter={() => setHoveredTooltip("worldwide-shipping")}
                   onMouseLeave={() => setHoveredTooltip(null)}
+                  onClick={() => setMobileTooltip("worldwide-shipping")}
                 >
                   worldwide&nbsp;shipping
                   {hoveredTooltip === "worldwide-shipping" && (
-                    <span className="absolute left-0 top-full mt-2 w-[400px] max-w-[90vw] bg-[#F7F6F0] border-2 border-black rounded-lg p-4 shadow-lg z-50 text-left">
+                    <span className="hidden md:block absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[400px] max-w-[90vw] bg-[#F7F6F0] border-2 border-black rounded-lg p-4 shadow-lg z-50 text-left">
                       <span className="block text-center text-xl font-bold mb-2 text-black">
                         {tooltipContent["worldwide-shipping"].title}
                       </span>
