@@ -8,10 +8,76 @@ interface ProductImageGridProps {
 
 const ProductImageGrid = ({ images, onImageClick }: ProductImageGridProps) => {
   const [hoveredImage, setHoveredImage] = useState<number | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 75) {
+      setCurrentIndex((prev) => Math.min(prev + 1, images.length - 1));
+    }
+
+    if (touchStart - touchEnd < -75) {
+      setCurrentIndex((prev) => Math.max(prev - 1, 0));
+    }
+  };
 
   return (
     <div className="space-y-1">
-      <div className="grid grid-cols-2 gap-1">
+      {/* Mobile Slider */}
+      <div className="md:hidden">
+        <div
+          className="overflow-hidden"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div
+            className="flex transition-transform duration-300 ease-out"
+            style={{
+              transform: `translateX(-${currentIndex * 100}%)`,
+            }}
+          >
+            {images.map((image, index) => (
+              <div
+                key={index}
+                className="relative w-full shrink-0 cursor-pointer"
+                onClick={() => onImageClick(image)}
+              >
+                <img
+                  src={image}
+                  alt={`Product ${index + 1}`}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Progress Dots */}
+        <div className="flex justify-center gap-2 mt-4">
+          {images.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`w-2 h-2 rounded-full transition-all ${
+                currentIndex === index ? "bg-black w-6" : "bg-gray-300"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop Grid */}
+      <div className="hidden md:grid grid-cols-2 gap-1">
         {images.map((image, index) => (
           <div
             key={index}
@@ -46,7 +112,8 @@ const ProductImageGrid = ({ images, onImageClick }: ProductImageGridProps) => {
           </div>
         ))}
       </div>
-      <div className="w-full">
+
+      <div className="w-full hidden md:inline-block">
         <img
           src="/assets/product/be-the-first.png"
           alt="Be the first"

@@ -7,7 +7,7 @@ import {
 
 const ProductAccordions = () => {
   return (
-    <div className="mt-32">
+    <div className="mt-20 md:mt-32">
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem
           value="description"

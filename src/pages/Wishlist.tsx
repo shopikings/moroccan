@@ -43,12 +43,12 @@ const Wishlist = () => {
 
         {wishlist.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20">
-            <p className="text-gray-600 font-montserrat text-lg mb-8">
+            <p className="text-gray-600 px-4 font-montserrat text-center text-md md:text-lg mb-8">
               Seems you have no items on your wishlist yet!
             </p>
             <Link
               to="/shop"
-              className="px-8 py-3 border-2 border-black text-black hover:bg-black hover:text-white transition-colors font-montserrat text-sm uppercase"
+              className="px-4 py-2 md:px-8 md:py-3 border-2 border-black text-black hover:bg-black hover:text-white transition-colors font-montserrat text-sm uppercase"
             >
               continue shopping
             </Link>

@@ -75,7 +75,9 @@ const ProductInfo = ({
   return (
     <div className="lg:px-8">
       <div className="flex items-start gap-2 mb-4">
-        <h1 className="text-5xl font-family-montserrat mb-4">{name}</h1>
+        <h1 className="text-3xl md:text-5xl font-family-montserrat mb-4">
+          {name}
+        </h1>
         <button
           onClick={handleAddToWishlist}
           className="p-1 cursor-pointer hover:bg-gray-100 rounded-full transition-colors"
