@@ -42,24 +42,24 @@ const ProductCard = ({
         onClick={handleCardClick}
       >
         {isSoldOut && (
-          <div className="absolute top-4 left-4 bg-[#321E1E] text-white px-2 py-3 text-xs font-montserrat font-semibold z-10 writing-mode-vertical">
-            <span className="[writing-mode:vertical-lr] rotate-180">
+          <div className="absolute top-4 left-4 bg-[#321E1E] text-white px-2 py-3 text-xs font-montserrat font-semibold z-10">
+            <span className="[writing-mode:vertical-lr] rotate-180 block">
               SOLD OUT
             </span>
           </div>
         )}
 
         {showSaleBadge && !isSoldOut && (
-          <div className="absolute top-4 left-4 bg-[#CD3434] text-white px-2 py-3 text-xs font-montserrat font-semibold z-10 writing-mode-vertical">
-            <span className="[writing-mode:vertical-lr] rotate-180">
+          <div className="absolute top-4 left-4 bg-[#CD3434] text-white px-2 py-3 text-xs font-montserrat font-semibold z-10">
+            <span className="[writing-mode:vertical-lr] rotate-180 block">
               SAVE {salePercentage}%
             </span>
           </div>
         )}
 
         {badge && !isSoldOut && !showSaleBadge && (
-          <div className="absolute top-4 left-4 bg-[#321E1E] text-white px-2 py-3 text-xs font-montserrat font-semibold z-10 writing-mode-vertical">
-            <span className="[writing-mode:vertical-lr] rotate-180">
+          <div className="absolute top-4 left-4 bg-[#321E1E] text-white px-2 py-3 text-xs font-montserrat font-semibold z-10">
+            <span className="[writing-mode:vertical-lr] rotate-180 block">
               {badge}
             </span>
           </div>
