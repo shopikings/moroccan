@@ -42,19 +42,40 @@ const ProductCard = ({
         onClick={handleCardClick}
       >
         {isSoldOut && (
-          <div className="absolute top-28 left-0 bg-[#321E1E] text-white px-3 py-2 text-xs font-montserrat font-semibold z-10 -rotate-90 origin-top-left translate-x-[28px]">
+          <div
+            className="absolute top-4 left-4 bg-[#321E1E] text-white px-3 py-2 text-xs font-montserrat font-semibold z-10"
+            style={{
+              transform: "rotate(-90deg) translateX(-100%)",
+              transformOrigin: "top left",
+              whiteSpace: "nowrap",
+            }}
+          >
             SOLD OUT
           </div>
         )}
 
         {showSaleBadge && !isSoldOut && (
-          <div className="absolute top-28 left-0 bg-[#CD3434] text-white px-3 py-2 text-xs font-montserrat font-semibold z-10 -rotate-90 origin-top-left translate-x-[28px]">
+          <div
+            className="absolute top-4 left-4 bg-[#CD3434] text-white px-3 py-2 text-xs font-montserrat font-semibold z-10"
+            style={{
+              transform: "rotate(-90deg) translateX(-100%)",
+              transformOrigin: "top left",
+              whiteSpace: "nowrap",
+            }}
+          >
             SAVE {salePercentage}%
           </div>
         )}
 
         {badge && !isSoldOut && !showSaleBadge && (
-          <div className="absolute top-28 left-0 bg-[#321E1E] text-white px-3 py-2 text-xs font-montserrat font-semibold z-10 -rotate-90 origin-top-left translate-x-[28px]">
+          <div
+            className="absolute top-4 left-4 bg-[#321E1E] text-white px-3 py-2 text-xs font-montserrat font-semibold z-10"
+            style={{
+              transform: "rotate(-90deg) translateX(-100%)",
+              transformOrigin: "top left",
+              whiteSpace: "nowrap",
+            }}
+          >
             {badge}
           </div>
         )}
