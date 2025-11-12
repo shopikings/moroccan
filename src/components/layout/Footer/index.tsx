@@ -69,7 +69,7 @@ const Footer = () => {
       <div className="w-full px-20 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 mb-12 font-montserrat text-xs">
           <div className="lg:col-span-2">
-            <h3 className="mb-4">Useful Links</h3>
+            <h3 className="mb-4 font-semibold">Useful Links</h3>
             <ul className="space-y-2">
               {usefulLinks.map((link) => (
                 <li key={link.label}>
@@ -94,7 +94,7 @@ const Footer = () => {
           </div>
 
           <div className="lg:col-span-2">
-            <h3 className="mb-4">Brand</h3>
+            <h3 className="mb-4 font-semibold">Brand</h3>
             <ul className="space-y-2">
               {brandLinks.map((link) => (
                 <li key={link.label}>
@@ -135,7 +135,7 @@ const Footer = () => {
           </div>
 
           <div className="lg:col-span-2">
-            <h3 className="mb-4">Policies</h3>
+            <h3 className="mb-4 font-semibold">Policies</h3>
             <ul className="space-y-2">
               {policyLinks.map((link) => (
                 <li key={link.label}>
@@ -151,7 +151,7 @@ const Footer = () => {
           </div>
 
           <div className="lg:col-span-4">
-            <h3 className="mb-4">Newsletter</h3>
+            <h3 className="mb-4 font-semibold">Newsletter</h3>
             <p className="text-gray-950 mb-4">
               Join the VIP crew to get exclusive fit access to sales, drops &
               more.
@@ -172,7 +172,7 @@ const Footer = () => {
           </div>
 
           <div className="lg:col-span-2">
-            <h3 className="mb-4">About</h3>
+            <h3 className="mb-4 font-semibold">About</h3>
             <p className="text-gray-950">
               Moroccan Glam is a modern modest fashion brand dedicated to
               timeless, sustainable designs that empower women to feel
