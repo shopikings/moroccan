@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import ProductCard from "@/components/product/ProductCard";
 
@@ -18,6 +18,9 @@ interface ProductSliderProps {
 const ProductSlider = ({ title }: ProductSliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const [itemsPerView, setItemsPerView] = useState(3);
 
   const products: Product[] = [
     {
@@ -51,7 +54,40 @@ const ProductSlider = ({ title }: ProductSliderProps) => {
     },
   ];
 
-  const itemsPerView = 3;
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setItemsPerView(1);
+      } else if (window.innerWidth < 1024) {
+        setItemsPerView(2);
+      } else {
+        setItemsPerView(3);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 75) {
+      handleNext();
+    }
+
+    if (touchStart - touchEnd < -75) {
+      handlePrev();
+    }
+  };
+
   const maxIndex = Math.max(0, products.length - itemsPerView);
 
   const handlePrev = () => {
@@ -109,7 +145,12 @@ const ProductSlider = ({ title }: ProductSliderProps) => {
             </button>
           )}
 
-          <div className="overflow-hidden">
+          <div
+            className="overflow-hidden"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{
@@ -119,7 +160,11 @@ const ProductSlider = ({ title }: ProductSliderProps) => {
               }}
             >
               {products.map((product) => (
-                <div key={product.id} className="min-w-[33.333%] px-0">
+                <div
+                  key={product.id}
+                  style={{ minWidth: `${100 / itemsPerView}%` }}
+                  className="px-0"
+                >
                   <ProductCard {...product} />
                 </div>
               ))}
