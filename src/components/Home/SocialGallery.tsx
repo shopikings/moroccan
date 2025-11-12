@@ -10,7 +10,7 @@ const SocialGallery = () => {
   return (
     <section className="pb-2 pt-4 md:pb-6 lg:pb-10 px-4 md:px-8 lg:px-16 bg-[#F7F6F0]">
       <div className="max-w-[1920px] mx-auto">
-        <h2 className="text-3xl md:text-4xl font-trirong text-center mb-8 md:mb-12">
+        <h2 className="text-2xl md:text-4xl font-trirong text-center mb-8 md:mb-12">
           #moroccan_glam.official
         </h2>
 
