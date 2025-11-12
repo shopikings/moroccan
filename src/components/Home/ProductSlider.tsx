@@ -172,6 +172,17 @@ const ProductSlider = ({ title }: ProductSliderProps) => {
           </div>
         </div>
       </div>
+
+      <div className="mt-2 mb-6 w-full max-w-xs mx-auto md:hidden">
+        <div className="h-1 bg-gray-200 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-black transition-all duration-300"
+            style={{
+              width: `${((currentIndex + 1) / products.length) * 100}%`,
+            }}
+          />
+        </div>
+      </div>
     </div>
   );
 };

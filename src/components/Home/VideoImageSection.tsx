@@ -8,7 +8,7 @@ const VideoImageSection = () => {
       <div className="flex flex-col md:flex-row">
         <div className="w-full md:w-1/2 relative">
           <img
-            src="/assets/home/-starting.png"
+            src="/assets/home/jewellery-starting.png"
             alt=""
             className="w-full h-full object-cover"
           />
