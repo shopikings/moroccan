@@ -46,7 +46,7 @@ const Navbar = () => {
           />
         </div>
 
-        <div className="flex items-center space-x-4 pr-5">
+        <div className="flex items-center space-x-4 pr-0 md:pr-5">
           <div className="hidden md:block">
             <CountrySelector triggerClassName="w-auto border-0 bg-transparent shadow-none focus:ring-0 px-2" />
           </div>
