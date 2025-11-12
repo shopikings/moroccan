@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 interface VideoCard {
@@ -13,6 +13,24 @@ const TrendingNow = () => {
   const [playingVideos, setPlayingVideos] = useState<Set<number>>(new Set());
   const [clickedVideo, setClickedVideo] = useState<number | null>(null);
   const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
+
+  const getSlidesPerView = () => {
+    if (typeof window === "undefined") return 4;
+    if (window.innerWidth < 640) return 1;
+    if (window.innerWidth < 768) return 2;
+    if (window.innerWidth < 1024) return 3;
+    if (window.innerWidth < 1280) return 3;
+    return 4;
+  };
+
+  const getGapSize = () => {
+    if (typeof window === "undefined") return 24;
+    if (window.innerWidth < 768) return 16;
+    return 24;
+  };
+
+  const [slidesPerView, setSlidesPerView] = useState(getSlidesPerView());
+  const [gapSize, setGapSize] = useState(getGapSize());
 
   const videoCards: VideoCard[] = [
     {
@@ -57,7 +75,18 @@ const TrendingNow = () => {
     },
   ];
 
-  const maxIndex = videoCards.length - 4;
+  useEffect(() => {
+    const handleResize = () => {
+      setSlidesPerView(getSlidesPerView());
+      setGapSize(getGapSize());
+      setCurrentIndex(0);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const maxIndex = videoCards.length - slidesPerView;
 
   const handlePrevious = () => {
     if (isAnimating || currentIndex === 0) return;
@@ -134,13 +163,20 @@ const TrendingNow = () => {
             <div
               className="flex gap-4 md:gap-6 transition-transform duration-500 ease-out"
               style={{
-                transform: `translateX(-${currentIndex * 25}%)`,
+                transform: `translateX(calc(-${currentIndex * 100}% - ${
+                  currentIndex * gapSize
+                }px))`,
               }}
             >
               {videoCards.map((card) => (
                 <div
                   key={card.id}
-                  className="relative aspect-3/4 bg-gray-200 rounded-lg overflow-hidden shrink-0 w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.333%-1.33rem)] lg:w-[calc(33.333%-1.33rem)] xl:w-[calc(25%-1.5rem)] cursor-pointer group"
+                  className="relative aspect-3/4 bg-gray-200 rounded-lg overflow-hidden shrink-0 cursor-pointer group"
+                  style={{
+                    width: `calc(${100 / slidesPerView}% - ${
+                      (gapSize * (slidesPerView - 1)) / slidesPerView
+                    }px)`,
+                  }}
                   onClick={() => togglePlayPause(card.id)}
                 >
                   <video
