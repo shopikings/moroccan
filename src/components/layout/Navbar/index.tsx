@@ -40,7 +40,7 @@ const Navbar = () => {
           onClick={() => navigate("/")}
         >
           <img
-            src="/assets/logo.svg"
+            src="/assets/logo.png"
             alt="Moroccan Logo"
             className="h-8 md:h-12 w-auto"
           />

@@ -79,7 +79,7 @@ const About = () => {
                   onMouseLeave={() => setHoveredTooltip(null)}
                   onClick={() => setMobileTooltip("moroccan-design")}
                 >
-                  Moroccan&nbsp;design
+                  Moroccan&nbsp;design.
                   {hoveredTooltip === "moroccan-design" && (
                     <span className="hidden md:block absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[400px] max-w-[90vw] bg-[#F7F6F0] border-2 border-black rounded-lg p-4 shadow-lg z-50 text-left">
                       <span className="block text-center text-xl font-bold mb-2 text-black">
@@ -91,7 +91,6 @@ const About = () => {
                     </span>
                   )}
                 </span>
-                .
               </p>
 
               <p className="text-2xl md:text-3xl lg:text-4xl font-trirong leading-relaxed">
