@@ -8,75 +8,92 @@ import CompleteYourLook from "./CompleteYourLook";
 import { Button } from "../ui/button";
 import { Heart } from "lucide-react";
 import { useWishlist } from "../../context/WishlistContext";
+import type { ShopifyProduct, ShopifyVariant } from "@/shopify/shopifyTypes";
 
 interface ProductInfoProps {
-  productId: string;
-  name: string;
-  salePrice: string;
-  originalPrice: string;
-  discount: number;
-  productImage: string;
+  product: ShopifyProduct;
 }
 
-const ProductInfo = ({
-  productId,
-  name,
-  salePrice,
-  originalPrice,
-  discount,
-  productImage,
-}: ProductInfoProps) => {
-  const [selectedColor, setSelectedColor] = useState("Cloudy Stone");
-  const [selectedSize, setSelectedSize] = useState("Regular (180x70 cm)");
+const ProductInfo = ({ product }: ProductInfoProps) => {
   const { addToWishlist, isInWishlist } = useWishlist();
+
+  // Safe default variant
+  const [selectedVariant, setSelectedVariant] = useState<ShopifyVariant>(
+    product.variants.edges[0]?.node
+  );
+
+  // Extract unique colors from product variants
+  const colors = Array.from(
+    new Set(
+      product.variants.edges
+        .map((v) =>
+          v.node.selectedOptions?.find((o) => o.name.toLowerCase() === "color")
+        )
+        .filter(Boolean)
+        .map((o) => o!.value)
+    )
+  ).map((c) => ({ name: c, value: c }));
+
+  // Extract unique sizes from product variants
+  const sizes = Array.from(
+    new Set(
+      product.variants.edges
+        .map((v) =>
+          v.node.selectedOptions?.find((o) => o.name.toLowerCase() === "size")
+        )
+        .filter(Boolean)
+        .map((o) => o!.value)
+    )
+  ).map((s) => ({ label: s, value: s }));
+
+  const handleColorChange = (color: string) => {
+    const variant = product.variants.edges.find((v) =>
+      (v.node.selectedOptions || []).some(
+        (o) => o.name.toLowerCase() === "color" && o.value === color
+      )
+    );
+    if (variant) setSelectedVariant(variant.node);
+  };
+
+  const handleSizeChange = (size: string) => {
+    const variant = product.variants.edges.find((v) =>
+      (v.node.selectedOptions || []).some(
+        (o) => o.name.toLowerCase() === "size" && o.value === size
+      )
+    );
+    if (variant) setSelectedVariant(variant.node);
+  };
 
   const handleAddToWishlist = () => {
     addToWishlist({
-      id: productId,
-      name,
-      price: parseFloat(salePrice.replace("£", "")),
-      image: productImage,
-      color: selectedColor,
+      id: product.id,
+      name: product.title,
+      price: parseFloat(selectedVariant.price.amount),
+      image: product.images.edges[0].node.src,
+      color:
+        selectedVariant.selectedOptions?.find(
+          (o) => o.name.toLowerCase() === "color"
+        )?.value || "",
     });
   };
 
-  const colors = [
-    { name: "Burgundy", value: "#800020" },
-    { name: "Lavender", value: "#E6E6FA" },
-    { name: "Black", value: "#000000" },
-    { name: "Cloudy Stone", value: "#A9A9A9" },
-    { name: "Tan", value: "#D2B48C" },
-    { name: "Brown", value: "#8B4513" },
-    { name: "Dark Gray", value: "#696969" },
-    { name: "Wine", value: "#722F37" },
-    { name: "Mint", value: "#98FF98" },
-    { name: "Light Purple", value: "#DDA0DD" },
-    { name: "Beige", value: "#F5F5DC" },
-    { name: "Orange", value: "#FFA500" },
-    { name: "Light Blue", value: "#ADD8E6" },
-    { name: "Navy", value: "#000080" },
-    { name: "Floral", value: "#FFB6C1" },
-    { name: "Magenta", value: "#FF00FF" },
-    { name: "Peach", value: "#FFDAB9" },
-    { name: "Forest Green", value: "#228B22" },
-    { name: "Charcoal", value: "#36454F" },
-    { name: "Pink", value: "#FFC0CB" },
-    { name: "Teal", value: "#008080" },
-    { name: "Gray", value: "#808080" },
-  ];
-
-  const sizes = [
-    { label: "Regular (180x70 cm)", value: "regular" },
-    { label: "Short (165x70 cm)", value: "short" },
-    { label: "Long (195x70 cm)", value: "long" },
-    { label: "Mini (165x50 cm)", value: "mini" },
-  ];
+  const discount =
+    selectedVariant.compareAtPrice &&
+    parseFloat(selectedVariant.compareAtPrice.amount) >
+      parseFloat(selectedVariant.price.amount)
+      ? Math.round(
+          ((parseFloat(selectedVariant.compareAtPrice.amount) -
+            parseFloat(selectedVariant.price.amount)) /
+            parseFloat(selectedVariant.compareAtPrice.amount)) *
+            100
+        )
+      : 0;
 
   return (
     <div className="lg:px-8">
       <div className="flex items-start gap-2 mb-4">
         <h1 className="text-3xl md:text-5xl font-family-montserrat mb-4">
-          {name}
+          {product.title}
         </h1>
         <button
           onClick={handleAddToWishlist}
@@ -84,47 +101,60 @@ const ProductInfo = ({
         >
           <Heart
             className={`w-7 h-7 ${
-              isInWishlist(productId)
+              isInWishlist(product.id)
                 ? "fill-red-500 text-red-500"
                 : "text-gray-700"
             }`}
           />
         </button>
       </div>
-
       <ProductPrice
-        salePrice={salePrice}
-        originalPrice={originalPrice}
+        salePrice={`${selectedVariant.price.amount} ${selectedVariant.price.currencyCode}`}
+        originalPrice={
+          selectedVariant.compareAtPrice
+            ? `${selectedVariant.compareAtPrice.amount} ${selectedVariant.compareAtPrice.currencyCode}`
+            : ""
+        }
         discount={discount}
       />
-
       <Button className="w-fit bg-black text-white py-3 rounded-full font-montserrat text-sm mb-6 hover:bg-gray-800 transition-colors">
         Talk to a stylist
       </Button>
-
       <ColorSelector
         colors={colors}
-        selectedColor={selectedColor}
-        onColorChange={setSelectedColor}
+        selectedColor={
+          selectedVariant.selectedOptions?.find(
+            (o) => o.name.toLowerCase() === "color"
+          )?.value || ""
+        }
+        onColorChange={handleColorChange}
       />
-
       <SizeSelector
         sizes={sizes}
-        selectedSize={selectedSize}
-        onSizeChange={setSelectedSize}
+        selectedSize={
+          selectedVariant.selectedOptions?.find(
+            (o) => o.name.toLowerCase() === "size"
+          )?.value || ""
+        }
+        onSizeChange={handleSizeChange}
       />
-
       <ProductActions
-        productId={productId}
-        productName={name}
-        productPrice={parseFloat(salePrice.replace("£", ""))}
-        productImage={productImage}
-        selectedSize={selectedSize}
-        selectedColor={selectedColor}
+        productId={product.id}
+        productName={product.title}
+        productPrice={parseFloat(selectedVariant.price.amount)}
+        productImage={product.images.edges[0].node.src}
+        selectedSize={
+          selectedVariant.selectedOptions?.find(
+            (o) => o.name.toLowerCase() === "size"
+          )?.value || ""
+        }
+        selectedColor={
+          selectedVariant.selectedOptions?.find(
+            (o) => o.name.toLowerCase() === "color"
+          )?.value || ""
+        }
       />
-
-      <ProductAccordions />
-
+      <ProductAccordions description={product?.description} />
       <CompleteYourLook />
     </div>
   );

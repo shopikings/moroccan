@@ -4,16 +4,20 @@ interface FilterBarProps {
   viewMode: "grid" | "list";
   onViewModeChange: (mode: "grid" | "list") => void;
   onFilterClick: () => void;
+  productCount: number;
 }
 
 const FilterBar = ({
   viewMode,
   onViewModeChange,
   onFilterClick,
+  productCount,
 }: FilterBarProps) => {
   return (
     <div className="flex items-center justify-between py-4">
-      <div className="text-sm font-montserrat text-gray-700">73 products</div>
+      <div className="text-sm font-montserrat text-gray-700">
+        {productCount} products
+      </div>
 
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">

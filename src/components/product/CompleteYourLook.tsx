@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { getProductsByCollection } from "@/shopify/useProductsByCollection";
+import { useEffect, useState } from "react";
 
 interface LookItem {
   id: number;
@@ -8,25 +9,39 @@ interface LookItem {
   price: string;
 }
 
+function getRandomProducts<T>(array: T[], count: number): T[] {
+  const shuffled = [...array].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+}
+
 const CompleteYourLook = () => {
+  const [lookItems, setLookItems] = useState<LookItem[]>([]);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
-  const lookItems: LookItem[] = [
-    {
-      id: 1,
-      image: "/assets/product/five.png",
-      title: "Neck jewelry",
-      subtitle: "Elegant Style",
-      price: "£35",
-    },
-    {
-      id: 2,
-      image: "/assets/product/six.png",
-      title: "Hand jewelry",
-      subtitle: "Classic Design",
-      price: "£25",
-    },
-  ];
+  const fetchProductByCollection = async () => {
+    const products = await getProductsByCollection("earrings", 10);
+    const randomProducts = getRandomProducts(products, 2);
+
+    const items: LookItem[] = randomProducts.map((p: any) => {
+      const shortDescription = p.description
+        ? p.description.split(" ").slice(0, 4).join(" ") // first 3 words
+        : "";
+
+      return {
+        id: p.id,
+        image: p.featuredImage || "/assets/product/fallback.png",
+        title: p.title,
+        subtitle: shortDescription,
+        price: `£${p.price.amount}`,
+      };
+    });
+
+    setLookItems(items);
+  };
+
+  useEffect(() => {
+    fetchProductByCollection();
+  }, []);
 
   return (
     <div className="mt-6">
@@ -48,13 +63,13 @@ const CompleteYourLook = () => {
                 className="w-full aspect-3/4 object-cover"
               />
               <div
-                className={`absolute pt-2 bottom-0 left-0 right-0 rounded-t-2xl bg-[#F7F6F0] transition-all duration-300 ease-in-out ${
+                className={`absolute pt-2 bottom-0 left-0 right-0 rounded-t-2xl bg-[#f7f6f0] transition-all duration-300 ease-in-out ${
                   hoveredCard === item.id ? "h-36" : "h-24"
                 }`}
               >
-                <div className="p-4 h-full flex flex-col">
-                  <div className="flex items-start justify-between mb-1">
-                    <h3 className="text-base font-montserrat font-semibold">
+                <div className="md:p-4 p-2 h-full flex flex-col">
+                  <div className="flex items-start justify-between gap-1 mb-1">
+                    <h3 className="text-base font-montserrat font-semibold capitalize">
                       {item.title}
                     </h3>
                     <span className="text-base font-montserrat font-semibold">

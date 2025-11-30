@@ -59,7 +59,7 @@ function App() {
             <Route path="size" element={<Size />} />
             <Route path="about" element={<About />} />
             <Route path="shop" element={<Shop />} />
-            <Route path="product/:id" element={<Product />} />
+            <Route path="product/:handle" element={<Product />} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route
               path="terms-and-conditions"
@@ -72,7 +72,10 @@ function App() {
             <Route path="wishlist" element={<Wishlist />} />
             <Route path="checkout" element={<Checkout />} />
             <Route path="blog" element={<Blog />} />
-            <Route path="blog/:id" element={<BlogDetail />} />
+            <Route
+              path="/blog/:blogHandle/:articleHandle"
+              element={<BlogDetail />}
+            />
           </Route>
         </Routes>
       </CartProvider>

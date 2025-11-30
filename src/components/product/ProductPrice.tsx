@@ -13,7 +13,7 @@ const ProductPrice = ({
     <div className="mb-4">
       <div className="flex items-center gap-3 mb-1">
         <span className="text-lg md:text-2xl font-fahkwang font-semibold text-[#CD3434]">
-          {salePrice}
+          £{salePrice}
         </span>
         <span className="text-sm md:text-lg font-fahkwang text-gray-500 line-through">
           {originalPrice}

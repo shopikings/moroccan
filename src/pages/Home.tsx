@@ -13,6 +13,7 @@ import NewsletterModal from "@/components/common/NewsletterModal";
 
 const Home = () => {
   const [isNewsletterOpen, setIsNewsletterOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("caftan");
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -50,12 +51,12 @@ const Home = () => {
     <div className="w-full">
       <HeroBanner />
       <BrandMarquee />
-      <ProductSlider />
+      <ProductSlider collectionName="luxe" />
       <MediaGrid />
       <TrendingNow />
       <VideoImageSection />
-      <CategorySection />
-      <DraggableProductSlider />
+      <CategorySection onCategorySelect={setSelectedCategory} />
+      <DraggableProductSlider collectionName={selectedCategory} />
       <FeaturesSection features={features} />
       <SocialGallery />
       <NewsletterModal

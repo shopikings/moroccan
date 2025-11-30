@@ -7,6 +7,8 @@ interface BlogCardProps {
   title: string;
   excerpt: string;
   date: string;
+  handle: string;
+  blogHandle: string;
 }
 
 export const BlogCard = ({
@@ -16,9 +18,15 @@ export const BlogCard = ({
   title,
   excerpt,
   date,
+  handle,
+  blogHandle,
 }: BlogCardProps) => {
   return (
-    <Link to={`/blog/${id}`} className="group block h-full">
+    <Link
+      key={id}
+      to={`/blog/${blogHandle}/${handle}`}
+      className="group block h-full"
+    >
       <div className="bg-white overflow-hidden rounded-b-md shadow-xl h-full flex flex-col">
         <div className="overflow-hidden mb-6">
           <img

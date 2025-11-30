@@ -1,19 +1,78 @@
 import { useState, useRef, useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+// import { useProductsByTag } from "@/shopify/useProductsByTag";
+import { useProductsByTagCached } from "@/shopify/useProductsByTagCached";
 
 interface VideoCard {
-  id: number;
+  id: string;
   videoUrl: string;
   thumbnail: string;
+  title: string;
+  price: string;
+}
+
+interface Product {
+  id: string;
+  title: string;
+  metafield?: {
+    reference?: {
+      __typename: string;
+      sources?: Array<{ url: string }>;
+      previewImage?: { url: string };
+    };
+  };
+  images?: {
+    edges?: Array<{
+      node: {
+        url: string;
+      };
+    }>;
+  };
+  priceRange?: {
+    minVariantPrice?: {
+      amount: string;
+    };
+  };
 }
 
 const TrendingNow = () => {
+  const {
+    data: products = [],
+    isLoading,
+    error,
+  } = useProductsByTagCached("trending-now", 4, "custom", "trending_now") as {
+    data: Product[];
+    isLoading: boolean;
+    error: any;
+  };
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [playingVideos, setPlayingVideos] = useState<Set<number>>(new Set());
-  const [clickedVideo, setClickedVideo] = useState<number | null>(null);
-  const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
+  const [playingVideos, setPlayingVideos] = useState<Set<string>>(new Set());
+  const [clickedVideo, setClickedVideo] = useState<string | null>(null);
 
+  const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
+
+  // Transform Shopify products into clean video cards
+  const transformedCards: VideoCard[] = products
+    .map((p: Product) => {
+      const videoData = p.metafield?.reference;
+      if (!videoData || videoData.__typename !== "Video") return null;
+      const videoUrl = videoData.sources?.[0]?.url;
+      if (!videoUrl) return null;
+
+      return {
+        id: p.id,
+        title: p.title,
+        videoUrl,
+        thumbnail:
+          videoData.previewImage?.url ?? p.images?.edges?.[0]?.node?.url ?? "",
+        price: p.priceRange?.minVariantPrice?.amount ?? "",
+      };
+    })
+    .filter(Boolean) as VideoCard[];
+
+  // Responsive slides calculations
   const getSlidesPerView = () => {
     if (typeof window === "undefined") return 4;
     if (window.innerWidth < 640) return 1;
@@ -32,49 +91,6 @@ const TrendingNow = () => {
   const [slidesPerView, setSlidesPerView] = useState(getSlidesPerView());
   const [gapSize, setGapSize] = useState(getGapSize());
 
-  const videoCards: VideoCard[] = [
-    {
-      id: 1,
-      videoUrl: "/assets/home/banner.mp4",
-      thumbnail: "/assets/home/best-seller.png",
-    },
-    {
-      id: 2,
-      videoUrl: "/assets/home/dresses.mp4",
-      thumbnail: "/assets/home/new.png",
-    },
-    {
-      id: 3,
-      videoUrl: "/assets/home/home-slider.mp4",
-      thumbnail: "/assets/home/best-seller.png",
-    },
-    {
-      id: 4,
-      videoUrl: "/assets/home/banner.mp4",
-      thumbnail: "/assets/home/new.png",
-    },
-    {
-      id: 5,
-      videoUrl: "/assets/home/banner.mp4",
-      thumbnail: "/assets/home/best-seller.png",
-    },
-    {
-      id: 6,
-      videoUrl: "/assets/home/dresses.mp4",
-      thumbnail: "/assets/home/new.png",
-    },
-    {
-      id: 7,
-      videoUrl: "/assets/home/home-slider.mp4",
-      thumbnail: "/assets/home/best-seller.png",
-    },
-    {
-      id: 8,
-      videoUrl: "/assets/home/banner.mp4",
-      thumbnail: "/assets/home/new.png",
-    },
-  ];
-
   useEffect(() => {
     const handleResize = () => {
       setSlidesPerView(getSlidesPerView());
@@ -86,7 +102,7 @@ const TrendingNow = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const maxIndex = videoCards.length - slidesPerView;
+  const maxIndex = transformedCards.length - slidesPerView;
 
   const handlePrevious = () => {
     if (isAnimating || currentIndex === 0) return;
@@ -102,7 +118,7 @@ const TrendingNow = () => {
     setTimeout(() => setIsAnimating(false), 500);
   };
 
-  const togglePlayPause = (id: number) => {
+  const togglePlayPause = (id: string) => {
     const video = videoRefs.current[id];
     if (!video) return;
 
@@ -117,7 +133,6 @@ const TrendingNow = () => {
         return newSet;
       });
     } else {
-      // Pause all other videos
       playingVideos.forEach((playingId) => {
         const playingVideo = videoRefs.current[playingId];
         if (playingVideo && playingId !== id) {
@@ -125,11 +140,13 @@ const TrendingNow = () => {
         }
       });
 
-      // Play the selected video
       video.play();
       setPlayingVideos(new Set([id]));
     }
   };
+
+  if (isLoading) return <p>Loading trending products...</p>;
+  if (error) return <p>Failed to load products.</p>;
 
   return (
     <section className="pt-5 pb-8 px-4 md:px-8 lg:px-16">
@@ -168,7 +185,7 @@ const TrendingNow = () => {
                 }px))`,
               }}
             >
-              {videoCards.map((card) => (
+              {transformedCards.map((card) => (
                 <div
                   key={card.id}
                   className="relative aspect-3/4 bg-gray-200 rounded-lg overflow-hidden shrink-0 cursor-pointer group"
@@ -203,10 +220,10 @@ const TrendingNow = () => {
                       />
                       <div className="flex-1 flex flex-col justify-between py-1 h-12">
                         <p className="text-black font-montserrat font-bold text-xs">
-                          Top 1
+                          {card.title}
                         </p>
                         <p className="text-black font-montserrat font-semibold text-xs">
-                          £35.00
+                          £{card.price}
                         </p>
                       </div>
                       <button className="bg-white cursor-pointer rounded-lg px-3 py-1.5 text-black font-montserrat font-medium text-xs hover:bg-black hover:text-white transition-colors pointer-events-auto">

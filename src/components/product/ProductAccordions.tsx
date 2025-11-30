@@ -5,7 +5,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const ProductAccordions = () => {
+interface ProductAccordionsProps {
+  description: string;
+}
+
+const ProductAccordions = ({ description }: ProductAccordionsProps) => {
   return (
     <div className="mt-20 md:mt-32">
       <Accordion type="single" collapsible className="w-full">
@@ -18,17 +22,7 @@ const ProductAccordions = () => {
           </AccordionTrigger>
           <AccordionContent>
             <div className="space-y-4 text-sm font-montserrat text-black pb-4">
-              <p>
-                Our Printed Modal Hijabs are crafted from our ultra-soft modal
-                fabric for unmatched comfort and elegance. Featuring must-have
-                prints that blend timeless charm with modern trends, these
-                hijabs are designed to elevate your modest wardrobe
-                effortlessly.
-              </p>
-              <p>
-                Find your perfect length with our regular, short, mini and long
-                options.
-              </p>
+              <p>{description}</p>
             </div>
           </AccordionContent>
         </AccordionItem>

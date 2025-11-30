@@ -4,33 +4,44 @@ import { Button } from "@/components/ui/button";
 import ProductOptionsModal from "./ProductOptionsModal";
 
 interface ProductCardProps {
-  id: number;
+  id: string;
+  handle?: string;
   name: string;
   price: string;
   image: string;
-  hoverImage: string;
+  hoverImage?: string;
   badge?: string;
   salePercentage?: number;
+  variants?: {
+    id: string;
+    title: string;
+    price: string;
+    compareAtPrice?: string;
+    selectedOptions: { name: string; value: string }[];
+  }[];
 }
 
 const ProductCard = ({
   id,
+  handle,
   name,
   price,
   image,
   hoverImage,
   badge,
   salePercentage,
+  variants,
 }: ProductCardProps) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const isSoldOut = badge === "SOLD OUT";
-  const showSaleBadge = salePercentage && salePercentage > 0;
+  const showSaleBadge =
+    typeof salePercentage === "number" && salePercentage > 0;
 
   const handleCardClick = () => {
-    navigate(`/product/${id}`);
+    navigate(`/product/${handle}`);
   };
 
   return (
@@ -81,13 +92,14 @@ const ProductCard = ({
         )}
 
         <div className="relative overflow-hidden bg-gray-100">
+          {hoverImage && <link rel="preload" as="image" href={hoverImage} />}
           <img
             src={image}
             alt={name}
             className="w-full h-[600px] object-cover"
           />
           <img
-            src={hoverImage}
+            src={hoverImage || image}
             alt={name}
             className={`absolute inset-0 w-full h-[600px] object-cover transition-opacity duration-500 ${
               isHovered ? "opacity-100" : "opacity-0"
@@ -117,14 +129,28 @@ const ProductCard = ({
         </div>
 
         <div className="mt-4 text-center">
-          <h3 className="font-fahkwang text-sm mb-2">{name}</h3>
-          <p className="font-montserrat text-base font-semibold">{price}</p>
+          <h3 className="font-fahkwang text-sm mb-2 capita">{name}</h3>
+          <p className="font-montserrat text-base font-semibold">£{price}</p>
         </div>
 
         <ProductOptionsModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          product={{ id: id.toString(), name, price, image, hoverImage }}
+          product={{
+            id: id.toString(),
+            name,
+            price,
+            image,
+            hoverImage: hoverImage || image,
+            variants: (variants || []).map((v) => ({
+              id: v.id,
+              price: { amount: v.price, currencyCode: "GBP" }, // wrap string into object
+              compareAtPrice: v.compareAtPrice
+                ? { amount: v.compareAtPrice, currencyCode: "GBP" }
+                : undefined,
+              selectedOptions: v.selectedOptions,
+            })),
+          }}
         />
       </div>
     </>

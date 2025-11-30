@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import FilterBar from "@/components/Shop/FilterBar";
 import FilterDrawer from "@/components/Shop/FilterDrawer";
 import { Separator } from "@/components/ui/separator";
 import ProductCard from "@/components/product/ProductCard";
 import Pagination from "@/components/Shop/Pagination";
+import { useProducts } from "@/shopify/useProducts";
+import type { ShopifyProduct } from "@/shopify/shopifyTypes";
+import { useProdByCollection } from "@/shopify/useProdCollection";
 
 const Shop = () => {
   const [searchParams] = useSearchParams();
@@ -14,6 +17,23 @@ const Shop = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const productsPerPage = 44;
 
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  const [inStockOnly, setInStockOnly] = useState(false);
+
+  const [sortOption, setSortOption] = useState<string>("featured");
+
+  useEffect(() => {
+    setCurrentPage(1);
+    setSelectedColors([]);
+    setSelectedSizes([]);
+    setInStockOnly(false);
+  }, [category]);
+
+  const { products, loading, error } = category
+    ? useProdByCollection(category)
+    : useProducts();
+
   const getCategoryTitle = () => {
     if (!category) return "Shop All";
     return category
@@ -21,89 +41,155 @@ const Shop = () => {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
   };
-  const baseProducts = [
-    {
-      id: 1,
-      name: "Ombre Modal Hijab - Baltic Amber",
-      price: "£40.0 GBP",
-      image: "/assets/shop/productOne.png",
-      hoverImage: "/assets/shop/productOne-hover.png",
-      salePercentage: 65,
-    },
-    {
-      id: 2,
-      name: "Ombre Modal Hijab - Ocean Blue",
-      price: "£40.0 GBP",
-      image: "/assets/shop/productTwo.png",
-      hoverImage: "/assets/shop/productTwo-hover.png",
-      salePercentage: 50,
-    },
-    {
-      id: 3,
-      name: "Ombre Modal Hijab - Forest Green",
-      price: "£40.0 GBP",
-      image: "/assets/shop/productThree.png",
-      hoverImage: "/assets/shop/productThree-hover.png",
-      salePercentage: 30,
-    },
-    {
-      id: 4,
-      name: "Ombre Modal Hijab - Sunset Orange",
-      price: "£40.0 GBP",
-      image: "/assets/shop/productFour.png",
-      hoverImage: "/assets/shop/productFour-hover.png",
-      salePercentage: 45,
-    },
-    {
-      id: 5,
-      name: "Ombre Modal Hijab - Rose Pink",
-      price: "£40.0 GBP",
-      image: "/assets/shop/productOne.png",
-      hoverImage: "/assets/shop/productOne-hover.png",
-      salePercentage: 40,
-    },
-    {
-      id: 6,
-      name: "Ombre Modal Hijab - Lavender",
-      price: "£40.0 GBP",
-      image: "/assets/shop/productTwo.png",
-      hoverImage: "/assets/shop/productTwo-hover.png",
-      salePercentage: 55,
-    },
-    {
-      id: 7,
-      name: "Ombre Modal Hijab - Mint Green",
-      price: "£40.0 GBP",
-      image: "/assets/shop/productThree.png",
-      hoverImage: "/assets/shop/productThree-hover.png",
-      salePercentage: 35,
-    },
-    {
-      id: 8,
-      name: "Ombre Modal Hijab - Coral",
-      price: "£40.0 GBP",
-      image: "/assets/shop/productFour.png",
-      hoverImage: "/assets/shop/productFour-hover.png",
-      salePercentage: 60,
-    },
-  ];
 
-  const allProducts = [
-    ...baseProducts,
-    ...baseProducts.map((p) => ({ ...p, id: p.id + 8 })),
-    ...baseProducts.map((p) => ({ ...p, id: p.id + 16 })),
-    ...baseProducts.map((p) => ({ ...p, id: p.id + 24 })),
-    ...baseProducts.map((p) => ({ ...p, id: p.id + 32 })),
-    ...baseProducts.map((p) => ({ ...p, id: p.id + 40 })),
-    ...baseProducts.map((p) => ({ ...p, id: p.id + 48 })),
-    ...baseProducts.map((p) => ({ ...p, id: p.id + 56 })),
-    ...baseProducts.map((p) => ({ ...p, id: p.id + 64 })),
-  ];
+  // const allProducts = [
+  //   ...baseProducts,
+  //   ...baseProducts.map((p) => ({ ...p, id: p.id + 8 })),
+  //   ...baseProducts.map((p) => ({ ...p, id: p.id + 16 })),
+  //   ...baseProducts.map((p) => ({ ...p, id: p.id + 24 })),
+  //   ...baseProducts.map((p) => ({ ...p, id: p.id + 32 })),
+  //   ...baseProducts.map((p) => ({ ...p, id: p.id + 40 })),
+  //   ...baseProducts.map((p) => ({ ...p, id: p.id + 48 })),
+  //   ...baseProducts.map((p) => ({ ...p, id: p.id + 56 })),
+  //   ...baseProducts.map((p) => ({ ...p, id: p.id + 64 })),
+  // ];
 
-  const totalPages = Math.ceil(allProducts.length / productsPerPage);
+  const getProductPrice = (product: ShopifyProduct) => {
+    if (!product?.variants?.edges?.length) return null;
+
+    const firstVariant = product.variants.edges[0].node;
+    const price = parseFloat(firstVariant.price.amount);
+    const compareAt = firstVariant.compareAtPrice
+      ? parseFloat(firstVariant.compareAtPrice.amount)
+      : null;
+
+    let salePercentage = 0;
+    if (compareAt && compareAt > price) {
+      salePercentage = Math.round(((compareAt - price) / compareAt) * 100);
+    }
+
+    return {
+      price: price.toFixed(2),
+      currency: firstVariant.price.currencyCode,
+      salePercentage,
+    };
+  };
+
+  const formattedProducts = products?.map((p) => {
+    const priceInfo = getProductPrice(p);
+
+    return {
+      id: p.id,
+      handle: p.handle,
+      name: p.title,
+      price: priceInfo ? `${priceInfo.price} ${priceInfo.currency}` : "",
+      image: p.images?.edges?.[0]?.node?.src || "/fallback.jpg",
+      hoverImage: p.images?.edges?.[1]?.node?.src ?? undefined,
+      salePercentage: priceInfo?.salePercentage || 0,
+      variants: p.variants?.edges.map((v: any) => {
+        const node = v.node;
+        return {
+          id: node.id,
+          title: node.title ?? "", // add a default title if missing
+          price: node.price.amount,
+          compareAtPrice: node.compareAtPrice?.amount,
+          selectedOptions: node.selectedOptions ?? [], // ensure it's always defined
+          availableForSale: node.availableForSale ?? false,
+        };
+      }),
+      createdAt: p.createdAt,
+    };
+  });
+
+  const allColors = Array.from(
+    new Set(
+      formattedProducts
+        ?.flatMap((p) =>
+          p.variants?.map((v: any) => {
+            const colorOpt = v.selectedOptions?.find(
+              (o: any) => o.name.toLowerCase() === "color"
+            );
+            return colorOpt?.value ?? ""; // default to empty string
+          })
+        )
+        .filter(Boolean)
+    )
+  );
+
+  const allSizes = Array.from(
+    new Set(
+      formattedProducts
+        ?.flatMap((p) =>
+          p.variants?.map((v: any) => {
+            const sizeOpt = v.selectedOptions?.find(
+              (o: any) => o.name.toLowerCase() === "size"
+            );
+            return sizeOpt?.value ?? ""; // default to empty string
+          })
+        )
+        .filter(Boolean)
+    )
+  );
+
+  const filteredProducts = formattedProducts?.filter((product) => {
+    const matchesColor =
+      selectedColors.length === 0 ||
+      product.variants.some((v: any) =>
+        selectedColors.includes(
+          v.selectedOptions?.find((o: any) => o.name.toLowerCase() === "color")
+            ?.value ?? ""
+        )
+      );
+
+    const matchesSize =
+      selectedSizes.length === 0 ||
+      product.variants.some((v: any) =>
+        selectedSizes.includes(
+          v.selectedOptions?.find((o: any) => o.name.toLowerCase() === "size")
+            ?.value ?? ""
+        )
+      );
+
+    const matchesStock =
+      !inStockOnly || product.variants.some((v: any) => v.availableForSale); // make sure your Shopify variant has `availableForSale`
+
+    return matchesColor && matchesSize && matchesStock;
+  });
+
+  const sortedProducts = filteredProducts?.slice().sort((a, b) => {
+    switch (sortOption) {
+      case "price-low-high":
+        return parseFloat(a.price) - parseFloat(b.price);
+      case "price-high-low":
+        return parseFloat(b.price) - parseFloat(a.price);
+      case "a-z":
+        return a.name.localeCompare(b.name);
+      case "z-a":
+        return b.name.localeCompare(a.name);
+      case "date-new-old":
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      case "date-old-new":
+        return (
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        );
+      default:
+        return 0; // featured or default
+    }
+  });
+
+  const totalPages = Math.ceil((sortedProducts?.length ?? 0) / productsPerPage);
+
   const startIndex = (currentPage - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
-  const currentProducts = allProducts.slice(startIndex, endIndex);
+  const currentProducts = sortedProducts?.slice(startIndex, endIndex);
+
+  if (loading) {
+    return <div className="h-screen text-center">Loading...</div>;
+  } else if (error) {
+    return <div className="h-screen text-center">{error}</div>;
+  }
 
   return (
     <div className="w-full">
@@ -122,12 +208,27 @@ const Shop = () => {
               viewMode={viewMode}
               onViewModeChange={setViewMode}
               onFilterClick={() => setIsFilterOpen(true)}
+              productCount={filteredProducts.length}
             />
           </div>
 
+          {/* <FilterDrawer
+            isOpen={isFilterOpen}
+            onClose={() => setIsFilterOpen(false)}
+          /> */}
           <FilterDrawer
             isOpen={isFilterOpen}
             onClose={() => setIsFilterOpen(false)}
+            selectedColors={selectedColors}
+            setSelectedColors={setSelectedColors}
+            selectedSizes={selectedSizes}
+            setSelectedSizes={setSelectedSizes}
+            inStockOnly={inStockOnly}
+            setInStockOnly={setInStockOnly}
+            allColors={allColors}
+            allSizes={allSizes}
+            sortOption={sortOption}
+            setSortOption={setSortOption}
           />
 
           <div className="">
@@ -135,7 +236,18 @@ const Shop = () => {
               {viewMode === "grid" ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
                   {currentProducts.map((product) => (
-                    <ProductCard key={product.id} {...product} />
+                    // <ProductCard key={product.id} {...product} />
+                    <ProductCard
+                      key={product.id}
+                      id={product.id}
+                      handle={product.handle}
+                      name={product.name}
+                      price={product.price}
+                      image={product.image}
+                      hoverImage={product.hoverImage}
+                      salePercentage={product.salePercentage}
+                      variants={product.variants}
+                    />
                   ))}
                 </div>
               ) : (
