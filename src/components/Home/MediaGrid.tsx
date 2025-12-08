@@ -19,7 +19,7 @@ const MediaGrid = () => {
           </div>
           <div className="absolute bottom-8 left-5">
             <Button
-              onClick={() => navigate("/shop?category=New")}
+              onClick={() => navigate("/shop?category=new-arrivals")}
               className="bg-white font-family-fahkwang text-[#080912] hover:bg-gray-100 font-semibold px-8 py-4 rounded-full relative overflow-hidden group/btn"
             >
               <span className="inline-block transition-all duration-500 group-hover/btn:translate-x-[200%] group-hover/btn:opacity-0">
@@ -75,7 +75,7 @@ const MediaGrid = () => {
           </div>
           <div className="absolute bottom-8 left-5">
             <Button
-              onClick={() => navigate("/shop?category=Best-Seller")}
+              onClick={() => navigate("/shop?category=engagemessage-best-sellers")}
               className="bg-white text-[#080912] font-family-fahkwang hover:bg-gray-100 font-normal px-8 py-4 rounded-full relative overflow-hidden group/btn"
             >
               <span className="inline-block transition-all duration-500 group-hover/btn:translate-x-[200%] group-hover/btn:opacity-0">

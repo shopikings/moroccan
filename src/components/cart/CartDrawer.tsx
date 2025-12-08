@@ -1,7 +1,9 @@
 import { X, Minus, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "../../context/CartContext";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import { useShopifyCheckout } from "@/shopify/checkout/useShopifyCheckout";
+import toast from "react-hot-toast";
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -11,15 +13,32 @@ interface CartDrawerProps {
 const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   const { cart, updateQuantity, removeFromCart, getCartTotal, getCartCount } =
     useCart();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const { createCheckout, loading, error } = useShopifyCheckout();
 
   const subtotal = getCartTotal();
   const discount = 0;
   const total = subtotal - discount;
 
-  const handleCheckout = () => {
-    onClose();
-    navigate("/checkout");
+  // const handleCheckout = () => {
+  //   onClose();
+  //   navigate("/checkout");
+  // };
+
+  const handleCheckout = async () => {
+    if (cart.length === 0) {
+      toast.error("Your cart is empty");
+      return;
+    }
+
+    const checkoutUrl = await createCheckout();
+
+    if (checkoutUrl) {
+      // Redirect to Shopify checkout
+      window.location.href = checkoutUrl;
+    } else {
+      toast.error(error || "Failed to create checkout");
+    }
   };
 
   return (
@@ -154,7 +173,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                   : "bg-black text-white hover:bg-gray-800"
               }`}
             >
-              Proceed to Checkout
+              {loading ? "Processing..." : "Proceed to Checkout"}
             </Button>
           </div>
         </div>

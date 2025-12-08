@@ -11,39 +11,19 @@ import OrderSummary from "@/components/Checkout/OrderSummary";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 
-interface CartItem {
-  id: number;
-  name: string;
-  shade: string;
-  price: number;
-  quantity: number;
-  image: string;
-}
-
-const mockCartItems: CartItem[] = [
-  {
-    id: 1,
-    name: "hybrid blush",
-    shade: "cheeky mood",
-    price: 22,
-    quantity: 1,
-    image: "/assets/productOne.png",
-  },
-  {
-    id: 2,
-    name: "high gloss",
-    shade: "daddys girl",
-    price: 20,
-    quantity: 1,
-    image: "/assets/productTwo.png",
-  },
-];
-
 export default function Checkout() {
-  const [cartItems] = useState(mockCartItems);
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const { cart } = useCart();
-  console.log(cart);
+
+  // Transform Shopify cart → your UI cart format
+  const cartItems = cart.map((item: any) => ({
+    id: Number(item.id.replace(/\D/g, "")), // extract numeric part
+    name: item.name,
+    shade: item.color || item.size || "", // Shopify doesn't have "shade", so fallback
+    price: item.price,
+    quantity: item.quantity,
+    image: item.image,
+  }));
 
   return (
     <div className="min-h-screen bg-background">

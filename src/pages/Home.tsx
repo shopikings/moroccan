@@ -51,7 +51,7 @@ const Home = () => {
     <div className="w-full">
       <HeroBanner />
       <BrandMarquee />
-      <ProductSlider collectionName="luxe" />
+      <ProductSlider collectionName="featured" />
       <MediaGrid />
       <TrendingNow />
       <VideoImageSection />

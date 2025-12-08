@@ -188,7 +188,7 @@ const About = () => {
       <OurEthos />
       <FounderSection />
       <div className="px-10 pb-5 pt-12 mx-auto">
-        <ProductSlider title={"Our Recommendations"} collectionName="luxe" />
+        <ProductSlider title={"Our Recommendations"} collectionName="sale" />
       </div>
       <FeaturesSection
         features={[
