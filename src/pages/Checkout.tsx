@@ -9,6 +9,7 @@ import PaymentSection from "@/components/Checkout/PaymentSection";
 import RememberMeSection from "@/components/Checkout/RememberMeSection";
 import OrderSummary from "@/components/Checkout/OrderSummary";
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/context/CartContext";
 
 interface CartItem {
   id: number;
@@ -41,6 +42,8 @@ const mockCartItems: CartItem[] = [
 export default function Checkout() {
   const [cartItems] = useState(mockCartItems);
   const [agreeToTerms, setAgreeToTerms] = useState(false);
+  const { cart } = useCart();
+  console.log(cart);
 
   return (
     <div className="min-h-screen bg-background">
