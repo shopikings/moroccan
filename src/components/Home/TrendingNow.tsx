@@ -1,15 +1,17 @@
 import { useState, useRef, useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-// import { useProductsByTag } from "@/shopify/useProductsByTag";
 import { useProductsByTagCached } from "@/shopify/useProductsByTagCached";
-// import { useCart } from "@/context/CartContext";
+import { useCart } from "@/context/CartContext";
 
-interface VideoCard {
+interface ProductVariant {
   id: string;
-  videoUrl: string;
-  thumbnail: string;
-  title: string;
-  price: string;
+  price: {
+    amount: string;
+  };
+  selectedOptions: {
+    name: string;
+    value: string;
+  }[];
 }
 
 interface Product {
@@ -34,6 +36,21 @@ interface Product {
       amount: string;
     };
   };
+  variants?: {
+    edges?: Array<{
+      node: ProductVariant;
+    }>;
+  };
+}
+
+interface VideoCard {
+  id: string;
+  videoUrl: string;
+  thumbnail: string;
+  title: string;
+  price: string;
+  product: Product; // Store the full product object
+  defaultVariant?: ProductVariant;
 }
 
 const TrendingNow = () => {
@@ -47,7 +64,7 @@ const TrendingNow = () => {
     error: any;
   };
 
-  // const { addToCart } = useCart();
+  const { addToCart } = useCart();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [playingVideos, setPlayingVideos] = useState<Set<string>>(new Set());
@@ -57,22 +74,73 @@ const TrendingNow = () => {
 
   // Transform Shopify products into clean video cards
   const transformedCards: VideoCard[] = products
-    .map((p: Product) => {
-      const videoData = p.metafield?.reference;
+    .map((product: Product) => {
+      const videoData = product.metafield?.reference;
       if (!videoData || videoData.__typename !== "Video") return null;
       const videoUrl = videoData.sources?.[0]?.url;
       if (!videoUrl) return null;
 
+      const defaultVariant = product.variants?.edges?.[0]?.node;
+      const productImage = product.images?.edges?.[0]?.node?.url || "";
+      const price =
+        product.priceRange?.minVariantPrice?.amount ||
+        defaultVariant?.price?.amount ||
+        "0.00";
+
       return {
-        id: p.id,
-        title: p.title,
+        id: product.id,
+        title: product.title,
         videoUrl,
-        thumbnail:
-          videoData.previewImage?.url ?? p.images?.edges?.[0]?.node?.url ?? "",
-        price: p.priceRange?.minVariantPrice?.amount ?? "",
+        thumbnail: videoData.previewImage?.url ?? productImage,
+        price,
+        product, // Store full product
+        defaultVariant,
       };
     })
     .filter(Boolean) as VideoCard[];
+
+  // Get size and color from selected options
+  const getSizeAndColor = (variant: ProductVariant) => {
+    let size = "";
+    let color = "";
+
+    variant.selectedOptions.forEach((option) => {
+      if (option.name.toLowerCase() === "size") {
+        size = option.value;
+      } else if (option.name.toLowerCase() === "color") {
+        color = option.value;
+      }
+    });
+
+    return { size, color };
+  };
+
+  // Add to Cart handler for trending products
+  const handleAddToCart = (card: VideoCard, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering the video play/pause
+
+    if (!card.defaultVariant) {
+      console.error("No variant found for product:", card.title);
+      return;
+    }
+
+    const { size, color } = getSizeAndColor(card.defaultVariant);
+    const productImage =
+      card.product.images?.edges?.[0]?.node?.url || card.thumbnail;
+
+    // Create a unique cart ID using the variant ID
+    const cartId = `${card.product.id}-${size}-${color}`;
+
+    addToCart({
+      id: cartId,
+      name: card.title,
+      price: parseFloat(card.defaultVariant.price.amount),
+      image: productImage,
+      size: size || "One Size",
+      color: color || "Default",
+      variantId: card.defaultVariant.id, // Store the actual variant ID
+    });
+  };
 
   // Responsive slides calculations
   const getSlidesPerView = () => {
@@ -228,8 +296,12 @@ const TrendingNow = () => {
                           £{card.price}
                         </p>
                       </div>
-                      <button className="bg-white cursor-pointer rounded-lg px-3 py-1.5 text-black font-montserrat font-medium text-xs hover:bg-black hover:text-white transition-colors pointer-events-auto">
-                        Add to Bag
+                      <button
+                        onClick={(e) => handleAddToCart(card, e)}
+                        disabled={!card.defaultVariant}
+                        className="bg-white cursor-pointer rounded-lg px-3 py-1.5 text-black font-montserrat font-medium text-xs hover:bg-black hover:text-white transition-colors pointer-events-auto disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {card.defaultVariant ? "Add to Bag" : "Unavailable"}
                       </button>
                     </div>
                   </div>

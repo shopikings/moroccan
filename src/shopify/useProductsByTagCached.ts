@@ -47,6 +47,24 @@ const PRODUCTS_BY_TAG_QUERY = `
               currencyCode
             }
           }
+
+          variants(first: 10) {
+            edges {
+              node {
+                id
+                title
+                availableForSale
+                price {
+                  amount
+                  currencyCode
+                }
+                selectedOptions {
+                  name
+                  value
+                }
+              }
+            }
+          }
         }
       }
     }
