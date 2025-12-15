@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 // import { useProductsByTag } from "@/shopify/useProductsByTag";
 import { useProductsByTagCached } from "@/shopify/useProductsByTagCached";
+// import { useCart } from "@/context/CartContext";
 
 interface VideoCard {
   id: string;
@@ -46,6 +47,7 @@ const TrendingNow = () => {
     error: any;
   };
 
+  // const { addToCart } = useCart();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [playingVideos, setPlayingVideos] = useState<Set<string>>(new Set());

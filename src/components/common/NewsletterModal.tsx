@@ -19,11 +19,17 @@ const NewsletterModal = ({ isOpen, onClose }: NewsletterModalProps) => {
     onClose();
   };
 
+  const handleClose = () => {
+    // Save to localStorage when user closes the modal
+    localStorage.setItem("newsletterClosed", "true");
+    onClose();
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-[90vw] sm:max-w-md p-0 bg-[#ECECEC] border-0 [&>button]:hidden z-100">
         <div
-          onClick={onClose}
+          onClick={handleClose}
           className="absolute top-2 right-2 sm:top-4 sm:right-4 z-50 cursor-pointer hover:opacity-70 transition-opacity"
         >
           <img
@@ -93,14 +99,18 @@ const NewsletterModal = ({ isOpen, onClose }: NewsletterModalProps) => {
           >
             By joining Moroccan Glam, you'll receive exclusive updates, early
             access, and private invitations. View our{" "}
-            <Link to="/privacy-policy" className="underline" onClick={onClose}>
+            <Link
+              to="/privacy-policy"
+              className="underline"
+              onClick={handleClose}
+            >
               privacy policy
             </Link>{" "}
             and{" "}
             <Link
               to="/terms-and-conditions"
               className="underline"
-              onClick={onClose}
+              onClick={handleClose}
             >
               terms of service
             </Link>{" "}

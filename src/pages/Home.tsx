@@ -16,12 +16,24 @@ const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState("caftan");
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsNewsletterOpen(true);
-    }, 5000);
+    // Check if user has previously closed the newsletter
+    const hasClosedNewsletter = localStorage.getItem("newsletterClosed");
 
-    return () => clearTimeout(timer);
+    if (!hasClosedNewsletter) {
+      // Only show newsletter if user hasn't closed it before
+      const timer = setTimeout(() => {
+        setIsNewsletterOpen(true);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
   }, []);
+
+  const handleCloseNewsletter = () => {
+    setIsNewsletterOpen(false);
+    // Save to localStorage when user closes the modal
+    localStorage.setItem("newsletterClosed", "true");
+  };
 
   const features = [
     {
@@ -61,7 +73,7 @@ const Home = () => {
       <SocialGallery />
       <NewsletterModal
         isOpen={isNewsletterOpen}
-        onClose={() => setIsNewsletterOpen(false)}
+        onClose={handleCloseNewsletter}
       />
     </div>
   );
